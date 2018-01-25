@@ -1,0 +1,120 @@
+body {
+
+  padding-bottom: 30px;
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+}
+<!-- LINK a -->
+a{
+	font-size: 18px;
+	color: black;
+}
+a:link{
+	font-size: 18px;
+    color: black;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-image: linear-gradient(to bottom,#337ab7 0,#2b669a 100%);
+}
+/*
+MEDIA QUERY PER IL NAVBAR
+*/
+
+@media screen and (max-width: 1000px) and (min-width: 0px) {
+    #hideonscreensize {
+        display: none;
+    } 
+}
+
+/* MEDIA QUERY PER IL MENU SIDE*/
+@media screen and (max-width: 767px) and (min-width: 0px) {
+    #menulaterale {
+        display: none;
+    } 
+	#menudropdown{
+		display: block;
+	}
+}
+@media screen and (min-width: 768px) {
+    #menulaterale {
+        display: block;
+    } 
+	#menudropdown{
+		display: none;
+	}
+	#xtest{
+		display: block;
+	}
+}
+
+/* Centra immagini tra loro navbar*/
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+
+
+.img-responsive{
+	
+}
+
+/**/
+.list-group-item:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+/**/
+.panel-default>.panel-heading {
+	color: #fff;
+    background-image: linear-gradient(to bottom,#337ab7 0,#2b669a 100%);
+}

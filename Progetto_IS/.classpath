@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/Francesca/Desktop/mysql-connector-java-5.1.42-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Francesca/Desktop/com.umlet.plugin-14.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Francesca/Desktop/flexjson-2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Francesca/Desktop/jackson-mapper-asl-1.2.0.jar"/>
-	<classpathentry kind="lib" path="C:/Apache-tomcat-8.5.15-windows-x64/apache-tomcat-8.5.15/lib/servlet-api.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-9">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Francesca/Desktop/junit-4.12.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
