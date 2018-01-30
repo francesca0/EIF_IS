@@ -4,15 +4,13 @@ import dao.ProgettoFormativoDAO;
 
 public class ProgettoFormativo {
 
-		public ProgettoFormativo(String unIdProgettoFormativo, String unaMatricolaStudente, String unIdTirocinio, String unIdTaz, String unIdTac, String unIdResponsabileAziendalePF, String unIdDd, String unIdPcd, int unaFirmaTaz,int unaApprovazioneRa, int unaFirmaTac, int unaFirmaDd, int unaFirmaPcd, int unaConfermaUst, String unNomeFile, int unRifiutato, int unAnnullato){
+		public ProgettoFormativo(int unIdProgettoFormativo, String unaMatricolaStudente, int unIdTirocinio, int unIdTutorAziendale, String unaMatricolaTutorAccademico, int unIdResponsabileAziendale, int unaFirmaTaz, int unaApprovazioneRa, int unaFirmaTac, int unaFirmaDd, int unaFirmaPcd, int unaConfermaUst, String unNomeFile, int unRifiutato, int unAnnullato){
 			idProgettoFormativo=unIdProgettoFormativo;
 			matricolaStudente=unaMatricolaStudente;
 			idTirocinio=unIdTirocinio;
-			idTaz=unIdTaz;
-			idTac=unIdTac;
-			idResponsabileAziendalePF=unIdResponsabileAziendalePF;
-			idDd=unIdDd;
-			idPcd=unIdPcd;
+			idTutorAziendale=unIdTutorAziendale;
+			matricolaTutorAccademico=unaMatricolaTutorAccademico;
+			idResponsabileAziendale=unIdResponsabileAziendale;
 			firmaTaz=unaFirmaTaz;
 			approvazioneRa=unaApprovazioneRa;
 			firmaTac=unaFirmaTac;
@@ -26,14 +24,12 @@ public class ProgettoFormativo {
 		}
 		
 		public ProgettoFormativo() {
-			idProgettoFormativo="";
+			idProgettoFormativo=0;
 			matricolaStudente="";
-			idTirocinio="";
-			idTaz="";
-			idTac="";
-			idResponsabileAziendalePF="";
-			idDd="";
-			idPcd="";
+			idTirocinio=0;
+			idTutorAziendale=0;
+			matricolaTutorAccademico="";
+			idResponsabileAziendale=0;
 			firmaTaz=0;
 			approvazioneRa=0;
 			firmaTac=0;
@@ -46,11 +42,11 @@ public class ProgettoFormativo {
 		}
 		
 		
-		public String getIdProgettoFormativo() {
+		public int getIdProgettoFormativo() {
 			return idProgettoFormativo;
 		}
 
-		public void setIdProgettoFormativo(String idProgettoFormativo) {
+		public void setIdProgettoFormativo(int idProgettoFormativo) {
 			this.idProgettoFormativo = idProgettoFormativo;
 		}
 
@@ -62,52 +58,36 @@ public class ProgettoFormativo {
 			this.matricolaStudente = matricolaStudente;
 		}
 
-		public String getIdTirocinio() {
+		public int getIdTirocinio() {
 			return idTirocinio;
 		}
 
-		public void setIdTirocinio(String idTirocinio) {
+		public void setIdTirocinio(int idTirocinio) {
 			this.idTirocinio = idTirocinio;
 		}
 
-		public String getIdTaz() {
-			return idTaz;
+		public int getIdTutorAziendale() {
+			return idTutorAziendale;
 		}
 
-		public void setIdTaz(String idTaz) {
-			this.idTaz = idTaz;
+		public void setIdTutorAziendale(int idTutorAziendale) {
+			this.idTutorAziendale = idTutorAziendale;
 		}
 
-		public String getIdTac() {
-			return idTac;
+		public String getMatricolaTutorAccademico() {
+			return matricolaTutorAccademico;
 		}
 
-		public void setIdTac(String idTac) {
-			this.idTac = idTac;
+		public void setMatricolaTutorAccademico(String matricolaTutorAccademico) {
+			this.matricolaTutorAccademico = matricolaTutorAccademico;
 		}
 
-		public String getIdResponsabileAziendalePF() {
-			return idResponsabileAziendalePF;
+		public int getIdResponsabileAziendale() {
+			return idResponsabileAziendale;
 		}
 
-		public void setIdResponsabileAziendalePF(String idResponsabileAziendalePF) {
-			this.idResponsabileAziendalePF = idResponsabileAziendalePF;
-		}
-
-		public String getIdDd() {
-			return idDd;
-		}
-
-		public void setIdDd(String idDd) {
-			this.idDd = idDd;
-		}
-
-		public String getIdPcd() {
-			return idPcd;
-		}
-
-		public void setIdPcd(String idPcd) {
-			this.idPcd = idPcd;
+		public void setIdResponsabileAziendale(int idResponsabileAziendale) {
+			this.idResponsabileAziendale = idResponsabileAziendale;
 		}
 
 		public int getFirmaTaz() {
@@ -184,8 +164,8 @@ public class ProgettoFormativo {
 
 		public String toString() {
 			return "ProgettoFormativo [idProgettoFormativo=" + idProgettoFormativo + ", matricolaStudente="
-					+ matricolaStudente + ", idTirocinio=" + idTirocinio + ", idTaz=" + idTaz + ", idTac=" + idTac
-					+ ", idResponsabileAziendalePF=" + idResponsabileAziendalePF + ", idDd=" + idDd + ", idPcd=" + idPcd + ", firmaTaz=" + firmaTaz
+					+ matricolaStudente + ", idTirocinio=" + idTirocinio + ", idTutorAziendale=" + idTutorAziendale + ", matricolaTutorAccademico=" + matricolaTutorAccademico
+					+ ", idResponsabileAziendale=" + idResponsabileAziendale + ", firmaTaz=" + firmaTaz
 					+ ", approvazioneRa=" + approvazioneRa + ", firmaTac=" + firmaTac + ", firmaDd=" + firmaDd
 					+ ", firmaPcd=" + firmaPcd + ", confermaUst=" + confermaUst + ", nomeFile=" + nomeFile
 					+ ", rifiutato=" + rifiutato + ", annullato=" + annullato + "]";
@@ -210,14 +190,12 @@ public class ProgettoFormativo {
 		
 	
 		
-		String idProgettoFormativo;
+		int idProgettoFormativo;
 		String matricolaStudente;
-		String idTirocinio;
-		String idTaz;
-		String idTac;
-		String idResponsabileAziendalePF;
-		String idDd;
-		String idPcd;
+		int idTirocinio;
+		int idTutorAziendale;
+		String matricolaTutorAccademico;
+		int idResponsabileAziendale;
 		int firmaTaz;
 		int approvazioneRa;
 		int firmaTac;

@@ -70,14 +70,12 @@ public class DirettoreDipartimentoDCS {
 			
 			ProgettoFormativo progettoFormativo = new ProgettoFormativo();
 			
-			progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
+			progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 			progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-			progettoFormativo.setIdTaz(rs.getString("idTaz"));
-			progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-			progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idRa"));
-			progettoFormativo.setIdTac(rs.getString("idTac"));
-			progettoFormativo.setIdDd(rs.getString("idDd"));
-			progettoFormativo.setIdPcd(rs.getString("idPcd"));
+			progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+			progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+			progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 			progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 			progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));
@@ -117,14 +115,12 @@ public class DirettoreDipartimentoDCS {
 			
 			ProgettoFormativo progettoFormativo = new ProgettoFormativo();
 			
-			progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
-			progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-			progettoFormativo.setIdTaz(rs.getString("idTaz"));
-			progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-			progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idRa"));
-			progettoFormativo.setIdTac(rs.getString("idTac"));
-			progettoFormativo.setIdDd(rs.getString("idDd"));
-			progettoFormativo.setIdPcd(rs.getString("idPcd"));
+			progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
+			progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));		
+			progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+			progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+			progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 			progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 			progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));
@@ -148,7 +144,7 @@ public class DirettoreDipartimentoDCS {
 	
 	
 	private static final String FIRMA_PF_DD = "UPDATE progetto_formativo SET firmaDd='1' WHERE idProgettoFormativo=? AND approvazioneRa='1' AND firmaDd='0' AND confermaUst='0'";			
-	public static void firmaPF(String idProgettoFormativo) throws ClassNotFoundException, SQLException{
+	public static void firmaPF(int idProgettoFormativo) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -156,7 +152,7 @@ public class DirettoreDipartimentoDCS {
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(FIRMA_PF_DD);
 		
-		ps.setString(1, idProgettoFormativo);
+		ps.setInt(1, idProgettoFormativo);
 		
 		ps.executeUpdate();
 		ps.close();

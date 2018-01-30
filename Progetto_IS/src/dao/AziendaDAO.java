@@ -23,7 +23,7 @@ public class AziendaDAO {
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(INSERT_SQL);
 		
-		ps.setString(1, azienda.getIdAzienda());
+		ps.setInt(1, azienda.getIdAzienda());
 		ps.setString(2, azienda.getNomeAzienda());
 		ps.setString(3, azienda.getIndirizzoAzienda());
 		ps.setString(4, azienda.getLocalitaAzienda());
@@ -44,11 +44,11 @@ public class AziendaDAO {
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(FIND_BY_ID);
 		
-		ps.setString(1, azienda.getIdAzienda());
+		ps.setInt(1, azienda.getIdAzienda());
 		rs = ps.executeQuery();
 		rs.next();
 
-		azienda.setIdAzienda(rs.getString("idAzienda"));
+		azienda.setIdAzienda(rs.getInt("idAzienda"));
 		azienda.setNomeAzienda(rs.getString("nomeAzienda"));
 		azienda.setIndirizzoAzienda(rs.getString("indirizzoAzienda"));
 		azienda.setLocalitaAzienda(rs.getString("localitaAzienda"));
@@ -69,7 +69,7 @@ public class AziendaDAO {
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(UPDATE_BY_ID);
 		
-		ps.setString(4, azienda.getIdAzienda());
+		ps.setInt(4, azienda.getIdAzienda());
 		ps.setString(1, azienda.getNomeAzienda());
 		ps.setString(2, azienda.getIndirizzoAzienda());
 		ps.setString(3, azienda.getLocalitaAzienda());
@@ -90,7 +90,7 @@ public class AziendaDAO {
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(DELETE_BY_ID);
 		
-		ps.setString(1, azienda.getIdAzienda());
+		ps.setInt(1, azienda.getIdAzienda());
 		
 		ps.executeUpdate();
 		ps.close();

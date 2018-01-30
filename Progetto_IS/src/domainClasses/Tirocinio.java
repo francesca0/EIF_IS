@@ -6,9 +6,9 @@ import dao.TirocinioDAO;
 
 public class Tirocinio{
 
-		public Tirocinio(String unIdTirocinio, String unIdResponsabileAziendaleTrc, String unIdTutorAziendale, String unaDescrizione, String unaTematica, String unaNote, Date unaDataInizio, Date unaDataFine){
+		public Tirocinio(int unIdTirocinio, int unIdResponsabileAziendale, int unIdTutorAziendale, String unaDescrizione, String unaTematica, String unaNote, Date unaDataInizio, Date unaDataFine){
 			idTirocinio=unIdTirocinio;
-			idResponsabileAziendaleTrc=unIdResponsabileAziendaleTrc;
+			idResponsabileAziendale=unIdResponsabileAziendale;
 			idTutorAziendale=unIdTutorAziendale;
 			descrizione=unaDescrizione;
 			tematica=unaTematica;
@@ -18,9 +18,9 @@ public class Tirocinio{
 		}
 		
 		public Tirocinio() {
-			idTirocinio="";
-			idResponsabileAziendaleTrc="";
-			idTutorAziendale="";
+			idTirocinio=0;
+			idResponsabileAziendale=0;
+			idTutorAziendale=0;
 			descrizione="";
 			tematica="";
 			note="";
@@ -29,27 +29,27 @@ public class Tirocinio{
 		}
 		
 		
-		public String getIdTirocinio() {
+		public int getIdTirocinio() {
 			return idTirocinio;
 		}
 
-		public void setIdTirocinio(String idTirocinio) {
+		public void setIdTirocinio(int idTirocinio) {
 			this.idTirocinio = idTirocinio;
 		}
 
-		public String getIdResponsabileAziendaleTrc() {
-			return idResponsabileAziendaleTrc;
+		public int getIdResponsabileAziendale() {
+			return idResponsabileAziendale;
 		}
 
-		public void setIdResponsabileAziendaleTrc(String idResponsabileAziendaleTrc) {
-			this.idResponsabileAziendaleTrc = idResponsabileAziendaleTrc;
+		public void setIdResponsabileAziendale(int idResponsabileAziendale) {
+			this.idResponsabileAziendale = idResponsabileAziendale;
 		}
 
-		public String getIdTutorAziendale() {
+		public int getIdTutorAziendale() {
 			return idTutorAziendale;
 		}
 
-		public void setIdTutorAziendale(String idTutorAziendale) {
+		public void setIdTutorAziendale(int idTutorAziendale) {
 			this.idTutorAziendale = idTutorAziendale;
 		}
 
@@ -95,7 +95,7 @@ public class Tirocinio{
 
 
 		public String toString() {
-			return "Tirocinio [idTirocinio=" + idTirocinio + ", idResponsabileAziendaleTrc=" + idResponsabileAziendaleTrc
+			return "Tirocinio [idTirocinio=" + idTirocinio + ", idResponsabileAziendale=" + idResponsabileAziendale
 					+ ", idTutorAziendale=" + idTutorAziendale + ", descrizione=" + descrizione + ", tematica="
 					+ tematica + ", note=" + note + ", dataInizio=" + dataInizio + ", dataFine=" + dataFine + "]";
 		}
@@ -119,9 +119,9 @@ public class Tirocinio{
 		
 
 
-		String idTirocinio;
-		String idResponsabileAziendaleTrc;
-		String idTutorAziendale;
+		int idTirocinio;
+		int idResponsabileAziendale;
+		int idTutorAziendale;
 		String descrizione;
 		String tematica;
 		String note;

@@ -30,7 +30,7 @@ private static final String INSERT_SQL = "INSERT INTO studente VALUES(?, ?, ?, ?
 		ps.setString(5, studente.getLuogoDiNascita());
 		ps.setString(6, studente.getResidenza());
 		ps.setString(7, studente.getTelefono());
-		ps.setString(8, studente.getTutorAccademico());
+		ps.setString(8, studente.getMatricolaTutorAccademico());
 		ps.setString(9, studente.getEmail());
 		ps.setString(10, studente.getPassword());
 		ps.setInt(11, studente.getTipoAccount());
@@ -63,7 +63,7 @@ private static final String INSERT_SQL = "INSERT INTO studente VALUES(?, ?, ?, ?
 		studente.setLuogoDiNascita(rs.getString("luogoDiNascita"));
 		studente.setResidenza(rs.getString("residenza"));
 		studente.setTelefono(rs.getString("telefono"));
-		studente.setTutorAccademico(rs.getString("tutorAccademico"));
+		studente.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 		studente.setEmail(rs.getString("email"));
 		studente.setPassword(rs.getString("password"));
 		studente.setTipoAccount(rs.getInt("tipoAccount"));
@@ -74,7 +74,7 @@ private static final String INSERT_SQL = "INSERT INTO studente VALUES(?, ?, ?, ?
 		
 	}
 	
-	private static final String UPDATE_BY_ID = "UPDATE studente SET nome=?, cognome=?, dataDiNascita=?, luogoDiNascita=?, residenza=?, telefono=?, tutorAccademico=?, email=?, password=?, tipoAccount=?  WHERE matricolaStudente=?";
+	private static final String UPDATE_BY_ID = "UPDATE studente SET nome=?, cognome=?, dataDiNascita=?, luogoDiNascita=?, residenza=?, telefono=?, matricolaTutorAccademico=?, email=?, password=?, tipoAccount=?  WHERE matricolaStudente=?";
 	
 	public static void update(Studente studente) throws ClassNotFoundException, SQLException{
 		
@@ -91,7 +91,7 @@ private static final String INSERT_SQL = "INSERT INTO studente VALUES(?, ?, ?, ?
 		ps.setString(4, studente.getLuogoDiNascita());
 		ps.setString(5, studente.getResidenza());
 		ps.setString(6, studente.getTelefono());
-		ps.setString(7, studente.getTutorAccademico());
+		ps.setString(7, studente.getMatricolaTutorAccademico());
 		ps.setString(8, studente.getEmail());
 		ps.setString(9, studente.getPassword());
 		ps.setInt(10, studente.getTipoAccount());

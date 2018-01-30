@@ -119,7 +119,7 @@
 </div>
       
       <div style="text-align:center">
-      	<input type="submit" value="Registrati">
+      	<button type="button" class="btn btn-secondary">Registrati</button>
 	  </div>	
 
 </form>

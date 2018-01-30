@@ -69,14 +69,12 @@ private static final String CARICA_PF_UFFICIO = "SELECT * FROM progetto_formativ
 			
 			ProgettoFormativo progettoFormativo = new ProgettoFormativo();
 			
-			progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
+			progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 			progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-			progettoFormativo.setIdTaz(rs.getString("idTaz"));
-			progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-			progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idRa"));
-			progettoFormativo.setIdTac(rs.getString("idTac"));
-			progettoFormativo.setIdDd(rs.getString("idDd"));
-			progettoFormativo.setIdPcd(rs.getString("idPcd"));
+			progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+			progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+			progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 			progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 			progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));
@@ -115,14 +113,12 @@ private static final String CARICA_PF_CONFERMATI_UFFICIO = "SELECT * FROM proget
 			
 			ProgettoFormativo progettoFormativo = new ProgettoFormativo();
 			
-			progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
+			progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 			progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-			progettoFormativo.setIdTaz(rs.getString("idTaz"));
-			progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-			progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idRa"));
-			progettoFormativo.setIdTac(rs.getString("idTac"));
-			progettoFormativo.setIdDd(rs.getString("idDd"));
-			progettoFormativo.setIdPcd(rs.getString("idPcd"));
+			progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+			progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+			progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 			progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 			progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));
@@ -146,7 +142,7 @@ private static final String CARICA_PF_CONFERMATI_UFFICIO = "SELECT * FROM proget
 	
 	
 private static final String CONFERMA_PF_UFFICIO = "UPDATE progetto_formativo SET confermaUst='1' WHERE idProgettoFormativo=? AND approvazioneRa='1' AND firmaTaz='1' AND firmaTac='1' AND (firmaDd='1' OR firmaPcd='1') AND confermaUst='0' AND annullato='0' AND rifiutato='0'";
-	public static void confermaPf(String idProgettoFormativo) throws ClassNotFoundException, SQLException{
+	public static void confermaPf(int idProgettoFormativo) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -154,7 +150,7 @@ private static final String CONFERMA_PF_UFFICIO = "UPDATE progetto_formativo SET
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(CONFERMA_PF_UFFICIO);
 		
-		ps.setString(1, idProgettoFormativo);
+		ps.setInt(1, idProgettoFormativo);
 		
 		ps.executeUpdate();
 		ps.close();
@@ -164,7 +160,7 @@ private static final String CONFERMA_PF_UFFICIO = "UPDATE progetto_formativo SET
 	
 	private static final String ANNULLA_PF_UFFICIO = "UPDATE progetto_formativo SET annullato='1' WHERE idProgettoFormativo=? AND approvazioneRa='1' AND confermaUst='0' AND rifiutato='0' AND annullato='0'";
 
-	public static void annullaPf(String idProgettoFormativo) throws ClassNotFoundException, SQLException{
+	public static void annullaPf(int idProgettoFormativo) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -172,7 +168,7 @@ private static final String CONFERMA_PF_UFFICIO = "UPDATE progetto_formativo SET
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(ANNULLA_PF_UFFICIO);
 		
-		ps.setString(1,idProgettoFormativo);
+		ps.setInt(1,idProgettoFormativo);
 		
 		ps.executeUpdate();
 		ps.close();
@@ -205,7 +201,7 @@ private static final String CONFERMA_PF_UFFICIO = "UPDATE progetto_formativo SET
 			studente.setLuogoDiNascita(rs.getString("luogoDiNascita"));
 			studente.setResidenza(rs.getString("residenza"));
 			studente.setTelefono(rs.getString("telefono"));
-			studente.setTutorAccademico(rs.getString("tutorAccademico"));
+			studente.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			studente.setEmail(rs.getString("email"));
 			studente.setPassword(rs.getString("password"));
 			studente.setTipoAccount(rs.getInt("tipoAccount"));

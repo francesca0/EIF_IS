@@ -4,31 +4,31 @@ import dao.ResponsabileAziendaleDAO;
 
 public class ResponsabileAziendale{
 
-		public ResponsabileAziendale(String unIdResponsabileAziendale, String unNome, String unCognome, String unaAziendaRa, String unaEmail, String unaPassword, int unTipoAccount){
+		public ResponsabileAziendale(int unIdResponsabileAziendale, String unNome, String unCognome, int unIdAzienda, String unaEmail, String unaPassword, int unTipoAccount){
 			idResponsabileAziendale=unIdResponsabileAziendale;
 			nome=unNome;
 			cognome=unCognome;
-			aziendaRa=unaAziendaRa;
+			idAzienda=unIdAzienda;
 			email=unaEmail;
 			password=unaPassword;
 			tipoAccount=unTipoAccount;
 		}
 		
 		public ResponsabileAziendale() {
-			idResponsabileAziendale="";
+			idResponsabileAziendale=0;
 			nome="";
 			cognome="";
-			aziendaRa="";
+			idAzienda=0;
 			email="";
 			password="";
 			tipoAccount=5;
 		}
 		
-		public String getIdResponsabileAziendale() {
+		public int getIdResponsabileAziendale() {
 			return idResponsabileAziendale;
 		}
 
-		public void setIdResponsabileAziendale(String idResponsabileAziendale) {
+		public void setIdResponsabileAziendale(int idResponsabileAziendale) {
 			this.idResponsabileAziendale = idResponsabileAziendale;
 		}
 
@@ -48,12 +48,12 @@ public class ResponsabileAziendale{
 			this.cognome = cognome;
 		}
 
-		public String getAziendaRa() {
-			return aziendaRa;
+		public int getIdAzienda() {
+			return idAzienda;
 		}
 
-		public void setAziendaRa(String aziendaRa) {
-			this.aziendaRa = aziendaRa;
+		public void setIdAzienda(int idAzienda) {
+			this.idAzienda = idAzienda;
 		}
 
 		public String getEmail() {
@@ -83,7 +83,7 @@ public class ResponsabileAziendale{
 		
 		public String toString() {
 			return "ResponsabileAziendale [idResponsabileAziendale=" + idResponsabileAziendale + ", nome=" + nome + ", cognome=" + cognome
-					+ ", aziendaRa=" + aziendaRa + ", email=" + email + ", password=" + password + ", tipoAccount="
+					+ ", idAzienda=" + idAzienda + ", email=" + email + ", password=" + password + ", tipoAccount="
 					+ tipoAccount + "]";
 		}
 
@@ -106,10 +106,10 @@ public class ResponsabileAziendale{
 		
 
 		
-		String idResponsabileAziendale;
+		int idResponsabileAziendale;
 		String nome;
 		String cognome;
-		String aziendaRa;
+		int idAzienda;
 		String email;
 		String password;
 		int tipoAccount;

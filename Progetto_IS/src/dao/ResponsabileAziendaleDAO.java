@@ -24,10 +24,10 @@ private ResponsabileAziendaleDAO(){
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(INSERT_SQL);
 		
-		ps.setString(1, responsabileAziendale.getIdResponsabileAziendale());
+		ps.setInt(1, responsabileAziendale.getIdResponsabileAziendale());
 		ps.setString(2, responsabileAziendale.getNome());
 		ps.setString(3, responsabileAziendale.getCognome());
-		ps.setString(4, responsabileAziendale.getAziendaRa());
+		ps.setInt(4, responsabileAziendale.getIdAzienda());
 		ps.setString(5, responsabileAziendale.getEmail());
 		ps.setString(6, responsabileAziendale.getPassword());
 		ps.setInt(7, responsabileAziendale.getTipoAccount());
@@ -48,14 +48,14 @@ private ResponsabileAziendaleDAO(){
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(FIND_BY_ID);
 		
-		ps.setString(1, responsabileAziendale.getIdResponsabileAziendale());
+		ps.setInt(1, responsabileAziendale.getIdResponsabileAziendale());
 		rs = ps.executeQuery();
 		rs.next();
 
-		responsabileAziendale.setIdResponsabileAziendale(rs.getString("idResponsabileAziendale"));
+		responsabileAziendale.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
 		responsabileAziendale.setNome(rs.getString("nome"));
 		responsabileAziendale.setCognome(rs.getString("cognome"));
-		responsabileAziendale.setAziendaRa(rs.getString("aziendaRa"));
+		responsabileAziendale.setIdAzienda(rs.getInt("idAzienda"));
 		responsabileAziendale.setEmail(rs.getString("email"));
 		responsabileAziendale.setPassword(rs.getString("password"));
 		responsabileAziendale.setTipoAccount(rs.getInt("tipoAccount"));
@@ -66,7 +66,7 @@ private ResponsabileAziendaleDAO(){
 		
 	}
 	
-	private static final String UPDATE_BY_ID = "UPDATE responsabile_aziendale SET nome=?, cognome=?, aziendaRa=?, email=?, password=?, tipoAccount=?  WHERE idResponsabileAziendale=?";
+	private static final String UPDATE_BY_ID = "UPDATE responsabile_aziendale SET nome=?, cognome=?, idAzienda=?, email=?, password=?, tipoAccount=?  WHERE idResponsabileAziendale=?";
 	
 	public static void update(ResponsabileAziendale responsabileAziendale) throws ClassNotFoundException, SQLException{
 		
@@ -76,10 +76,10 @@ private ResponsabileAziendaleDAO(){
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(UPDATE_BY_ID);
 		
-		ps.setString(7, responsabileAziendale.getIdResponsabileAziendale());
+		ps.setInt(7, responsabileAziendale.getIdResponsabileAziendale());
 		ps.setString(1, responsabileAziendale.getNome());
 		ps.setString(2, responsabileAziendale.getCognome());
-		ps.setString(3, responsabileAziendale.getAziendaRa());
+		ps.setInt(3, responsabileAziendale.getIdAzienda());
 		ps.setString(4, responsabileAziendale.getEmail());
 		ps.setString(5, responsabileAziendale.getPassword());
 		ps.setInt(6, responsabileAziendale.getTipoAccount());
@@ -100,7 +100,7 @@ private ResponsabileAziendaleDAO(){
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(DELETE_BY_ID);
 		
-		ps.setString(1, responsabileAziendale.getIdResponsabileAziendale());
+		ps.setInt(1, responsabileAziendale.getIdResponsabileAziendale());
 		
 		ps.executeUpdate();
 		ps.close();

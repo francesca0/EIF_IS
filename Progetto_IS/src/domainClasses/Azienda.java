@@ -4,7 +4,7 @@ import dao.AziendaDAO;
 
 public class Azienda {
 
-		public Azienda(String unIdAzienda, String unNomeAzienda, String unaLocalitaAzienda, String unIndirizzoAzienda){
+		public Azienda(int unIdAzienda, String unNomeAzienda, String unaLocalitaAzienda, String unIndirizzoAzienda){
 			idAzienda=unIdAzienda;
 			nomeAzienda=unNomeAzienda;
 			localitaAzienda=unaLocalitaAzienda;
@@ -12,17 +12,17 @@ public class Azienda {
 		}
 		
 		public Azienda() {
-			idAzienda="";
+			idAzienda=0;
 			nomeAzienda="";
 			localitaAzienda="";
 			indirizzoAzienda="";
 		}
 		
-		public String getIdAzienda() {
+		public int getIdAzienda() {
 			return idAzienda;
 		}
 
-		public void setIdAzienda(String idAzienda) {
+		public void setIdAzienda(int idAzienda) {
 			this.idAzienda = idAzienda;
 		}
 
@@ -73,7 +73,7 @@ public class Azienda {
 		}
 		
 		
-		String idAzienda;
+		int idAzienda;
 		String nomeAzienda;
 		String localitaAzienda;
 		String indirizzoAzienda;

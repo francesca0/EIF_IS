@@ -29,32 +29,34 @@ public class ResponsabileAziendaleDCS {
 		
 		
 		if(rs.next()){
-		ResponsabileAziendale responsabileAziendale = new ResponsabileAziendale();
-		
-		responsabileAziendale.setIdResponsabileAziendale(rs.getString("idResponsabileAziendale")); //PK
-		responsabileAziendale.setNome(rs.getString("nome"));
-		responsabileAziendale.setCognome(rs.getString("cognome"));
-		responsabileAziendale.setPassword(rs.getString("password"));
-		responsabileAziendale.setTipoAccount(rs.getInt("tipoAccount"));
-		
-		System.out.println("ResponsabileAziendale trovato.");
-		rs.close();
-		ps.close();
-		con.close();
-		return responsabileAziendale;
+			ResponsabileAziendale responsabileAziendale = new ResponsabileAziendale();
+			
+			responsabileAziendale.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale")); //PK
+			responsabileAziendale.setNome(rs.getString("nome"));
+			responsabileAziendale.setCognome(rs.getString("cognome"));
+			responsabileAziendale.setPassword(rs.getString("password"));
+			responsabileAziendale.setTipoAccount(rs.getInt("tipoAccount"));
+			
+			System.out.println("ResponsabileAziendale trovato.");
+			rs.close();
+			ps.close();
+			con.close();
+			
+			return responsabileAziendale;
 		}
 		else{
-		System.out.println("ResponsabileAziendale non presente nel database.");
-		rs.close();
-		ps.close();
-		con.close();
-	
-		return null;
+			
+			System.out.println("ResponsabileAziendale non presente nel database.");
+			rs.close();
+			ps.close();
+			con.close();
+		
+			return null;
 		}
 	}
 	
-private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE idResponsabileAziendaleTrc=?";
-	public static ArrayList<Tirocinio> caricaTirocini(String idResponsabileAziendale) throws ClassNotFoundException, SQLException{
+private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE idResponsabileAziendale=?";
+	public static ArrayList<Tirocinio> caricaTirocini(int idResponsabileAziendale) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -63,7 +65,7 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 		
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(CARICA_TIROCINI_RA);
-		ps.setString(1, idResponsabileAziendale);
+		ps.setInt(1, idResponsabileAziendale);
 		
 		rs = ps.executeQuery();
 		
@@ -71,9 +73,9 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 			
 			Tirocinio tirocinio = new Tirocinio();
 			
-			tirocinio.setIdTirocinio(rs.getString("idTirocinio"));
-			tirocinio.setIdResponsabileAziendaleTrc(rs.getString("idResponsabileAziendaleTrc"));
-			tirocinio.setIdTutorAziendale(rs.getString("idTutorAziendale"));
+			tirocinio.setIdTirocinio(rs.getInt("idTirocinio"));
+			tirocinio.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			tirocinio.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
 			tirocinio.setDescrizione(rs.getString("descrizione"));
 			tirocinio.setTematica(rs.getString("tematica"));
 			tirocinio.setNote(rs.getString("note"));
@@ -92,8 +94,8 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 	}
 	
 
-	private static final String CARICA_PF_RA = "SELECT * FROM progetto_formativo WHERE idResponsabileAziendalePF=? AND approvazioneRa='0'";
-	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi(String idResponsabileAziendale) throws ClassNotFoundException, SQLException{
+	private static final String CARICA_PF_RA = "SELECT * FROM progetto_formativo WHERE idResponsabileAziendale=? AND approvazioneRa='0'";
+	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi(int idResponsabileAziendale) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -102,7 +104,7 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 		
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(CARICA_PF_RA);
-		ps.setString(1, idResponsabileAziendale);
+		ps.setInt(1, idResponsabileAziendale);
 
 		rs = ps.executeQuery();
 		
@@ -110,14 +112,12 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 			
 			ProgettoFormativo progettoFormativo = new ProgettoFormativo();
 			
-			progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
+			progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 			progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-			progettoFormativo.setIdTaz(rs.getString("idTaz"));
-			progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-			progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idResponsabileAziendalePF"));
-			progettoFormativo.setIdTac(rs.getString("idTac"));
-			progettoFormativo.setIdDd(rs.getString("idDd"));
-			progettoFormativo.setIdPcd(rs.getString("idPcd"));
+			progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+			progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+			progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 			progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 			progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));
@@ -140,8 +140,8 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 	}
 
 	
-	private static final String CARICA_PF_APPROVATI_RA = "SELECT * FROM progetto_formativo WHERE idResponsabileAziendalePF=? AND approvazioneRa='1'";
-	public static ArrayList<ProgettoFormativo> caricaProgettiFormativiApprovati(String idResponsabileAziendale) throws ClassNotFoundException, SQLException{
+	private static final String CARICA_PF_APPROVATI_RA = "SELECT * FROM progetto_formativo WHERE idResponsabileAziendale=? AND approvazioneRa='1'";
+	public static ArrayList<ProgettoFormativo> caricaProgettiFormativiApprovati(int idResponsabileAziendale) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -150,7 +150,7 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 		
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(CARICA_PF_APPROVATI_RA);
-		ps.setString(1, idResponsabileAziendale);
+		ps.setInt(1, idResponsabileAziendale);
 
 		rs = ps.executeQuery();
 		
@@ -158,14 +158,12 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 			
 			ProgettoFormativo progettoFormativo = new ProgettoFormativo();
 			
-			progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
+			progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 			progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-			progettoFormativo.setIdTaz(rs.getString("idTaz"));
-			progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-			progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idResponsabileAziendalePF"));
-			progettoFormativo.setIdTac(rs.getString("idTac"));
-			progettoFormativo.setIdDd(rs.getString("idDd"));
-			progettoFormativo.setIdPcd(rs.getString("idPcd"));
+			progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+			progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+			progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 			progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 			progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));
@@ -188,8 +186,8 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 	}
 	
 	
-	private static final String APPROVA_PF_RA = "UPDATE progetto_formativo SET approvazioneRa='1' WHERE idProgettoFormativo=? AND idResponsabileAziendalePF=? AND approvazioneRa='0' AND confermaUst='0' AND rifiutato='0'";			
-	public static void approvaPF(String idProgettoFormativo, String idResponsabileAziendale) throws ClassNotFoundException, SQLException{
+	private static final String APPROVA_PF_RA = "UPDATE progetto_formativo SET approvazioneRa='1' WHERE idProgettoFormativo=? AND idResponsabileAziendale=? AND approvazioneRa='0' AND confermaUst='0' AND rifiutato='0'";			
+	public static void approvaPF(int idProgettoFormativo, int idResponsabileAziendale) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -197,16 +195,16 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(APPROVA_PF_RA);
 		
-		ps.setString(1, idProgettoFormativo);
-		ps.setString(2, idResponsabileAziendale); 
+		ps.setInt(1, idProgettoFormativo);
+		ps.setInt(2, idResponsabileAziendale); 
 		
 		ps.executeUpdate();
 		ps.close();
 		con.close();
 	}
 	
-	private static final String RIFIUTA_PF_RA = "UPDATE progetto_formativo SET rifiutato='1' WHERE idProgettoFormativo=? AND idResponsabileAziendalePF=? AND approvazioneRa='0' AND confermaUst='0' AND rifiutato='0'";			
-	public static void rifiutaPF(String idProgettoFormativo, String idResponsabileAziendale) throws ClassNotFoundException, SQLException{
+	private static final String RIFIUTA_PF_RA = "UPDATE progetto_formativo SET rifiutato='1' WHERE idProgettoFormativo=? AND idResponsabileAziendale=? AND approvazioneRa='0' AND confermaUst='0' AND rifiutato='0'";			
+	public static void rifiutaPF(int idProgettoFormativo, int idResponsabileAziendale) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -214,8 +212,8 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(RIFIUTA_PF_RA);
 		
-		ps.setString(1, idProgettoFormativo);
-		ps.setString(2, idResponsabileAziendale); // CHECK DATABASE << ID <<
+		ps.setInt(1, idProgettoFormativo);
+		ps.setInt(2, idResponsabileAziendale); // CHECK DATABASE << ID <<
 		
 		ps.executeUpdate();
 		ps.close();

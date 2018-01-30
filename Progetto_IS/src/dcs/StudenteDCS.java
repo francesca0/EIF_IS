@@ -36,18 +36,20 @@ public class StudenteDCS {
 			studente.setTipoAccount(rs.getInt("tipoAccount"));
 			
 			System.out.println("Studente trovato.");
-			rs.close();
-			ps.close();
-			con.close();
-			return studente;
+			
+				rs.close();
+				ps.close();
+				con.close();
+				
+				return studente;
 			}
 			else{
-			System.out.println("Studente non presente nel database.");
-			rs.close();
-			ps.close();
-			con.close();
+				System.out.println("Studente non presente nel database.");
+				rs.close();
+				ps.close();
+				con.close();
 		
-			return null;
+				return null;
 			}
 		}
 		
@@ -67,14 +69,12 @@ public class StudenteDCS {
 				
 				ProgettoFormativo progettoFormativo = new ProgettoFormativo();
 				
-				progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
+				progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 				progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-				progettoFormativo.setIdTaz(rs.getString("idTaz"));
-				progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-				progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idResponsabileAziendalePF"));
-				progettoFormativo.setIdTac(rs.getString("idTac"));
-				progettoFormativo.setIdDd(rs.getString("idDd"));
-				progettoFormativo.setIdPcd(rs.getString("idPcd"));
+				progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+				progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+				progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+				progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 				progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 				progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 				progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));

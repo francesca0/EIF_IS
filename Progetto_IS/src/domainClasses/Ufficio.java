@@ -12,7 +12,7 @@ public class Ufficio{
 		}
 		
 		public Ufficio() {
-			idUfficio="";
+			idUfficio="ufficio";
 			email="";
 			password="";
 			tipoAccount=1;

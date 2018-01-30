@@ -4,31 +4,31 @@ import dao.TutorAziendaleDAO;
 
 public class TutorAziendale {
 
-		public TutorAziendale(String unIdTutorAziendale, String unNome, String unCognome, String unaAziendaTaz, String unaEmail, String unaPassword, int unTipoAccount){
+		public TutorAziendale(int unIdTutorAziendale, String unNome, String unCognome, int unIdAzienda, String unaEmail, String unaPassword, int unTipoAccount){
 			idTutorAziendale=unIdTutorAziendale;
 			nome=unNome;
 			cognome=unCognome;
-			aziendaTaz=unaAziendaTaz;
+			idAzienda=unIdAzienda;
 			email=unaEmail;
 			password=unaPassword;
 			tipoAccount=unTipoAccount;
 		}
 		
 		public TutorAziendale() {
-			idTutorAziendale="";
+			idTutorAziendale=0;
 			nome="";
 			cognome="";
-			aziendaTaz="";
+			idAzienda=0;
 			email="";
 			password="";
 			tipoAccount=2;
 		}
 		
-		public String getIdTutorAziendale() {
+		public int getIdTutorAziendale() {
 			return idTutorAziendale;
 		}
 
-		public void setIdTutorAziendale(String idTutorAziendale) {
+		public void setIdTutorAziendale(int idTutorAziendale) {
 			this.idTutorAziendale = idTutorAziendale;
 		}
 
@@ -48,12 +48,12 @@ public class TutorAziendale {
 			this.cognome = cognome;
 		}
 
-		public String getAziendaTaz() {
-			return aziendaTaz;
+		public int getIdAzienda() {
+			return idAzienda;
 		}
 
-		public void setAziendaTaz(String aziendaTaz) {
-			this.aziendaTaz = aziendaTaz;
+		public void setIdAzienda(int idAzienda) {
+			this.idAzienda = idAzienda;
 		}
 
 		public String getEmail() {
@@ -82,7 +82,7 @@ public class TutorAziendale {
 		
 		public String toString() {
 			return "TutorAziendale [idTutorAziendale=" + idTutorAziendale + ", nome=" + nome + ", cognome=" + cognome
-					+ ", aziendaTaz=" + aziendaTaz + ", email=" + email + ", password=" + password + ", tipoAccount="
+					+ ", idAzienda=" + idAzienda + ", email=" + email + ", password=" + password + ", tipoAccount="
 					+ tipoAccount + "]";
 		}
 
@@ -103,31 +103,10 @@ public class TutorAziendale {
 			TutorAziendaleDAO.delete(this);
 		}
 		
-		//METODI DA CANCELLARE
-		public void trovaTutti() throws Exception{
-			TutorAziendaleDAO.findAll();
-		}
-		
-		public void trovaByEmail() throws Exception{
-			TutorAziendaleDAO.findAllByEmail(this);
-		}
-		
-		public void visualizzazionePf() throws Exception{
-			TutorAziendaleDAO.visualizzaPf(this);
-		}
-		
-		public void firmaPf(ProgettoFormativo progetto) throws Exception{
-			TutorAziendaleDAO.firmaPf(progetto, this);
-		}
-		
-		public void visionaPf() throws Exception{
-			TutorAziendaleDAO.visionaPf(this);
-		}
-		
-		String idTutorAziendale;
+		int idTutorAziendale;
 		String nome;
 		String cognome;
-		String aziendaTaz;
+		int idAzienda;
 		String email;
 		String password;
 		int tipoAccount;

@@ -28,32 +28,32 @@ public class TutorAccademicoDCS {
 		
 		
 		if(rs.next()){
-		TutorAccademico tutorAccademico = new TutorAccademico();
+			TutorAccademico tutorAccademico = new TutorAccademico();
+			
+			tutorAccademico.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico")); //PK
+			tutorAccademico.setNome(rs.getString("nome"));
+			tutorAccademico.setCognome(rs.getString("cognome"));
+			tutorAccademico.setPassword(rs.getString("password"));
+			tutorAccademico.setTipoAccount(rs.getInt("tipoAccount"));
+			
+			System.out.println("TutorAccademico trovato.");
+			rs.close();
+			ps.close();
+			con.close();
+			return tutorAccademico;
+			}
+			else{
+			System.out.println("TutorAccademico non presente nel database.");
+			rs.close();
+			ps.close();
+			con.close();
 		
-		tutorAccademico.setIdTutorAccademico(rs.getString("idTutorAccademico")); //PK
-		tutorAccademico.setNome(rs.getString("nome"));
-		tutorAccademico.setCognome(rs.getString("cognome"));
-		tutorAccademico.setPassword(rs.getString("password"));
-		tutorAccademico.setTipoAccount(rs.getInt("tipoAccount"));
-		
-		System.out.println("TutorAccademico trovato.");
-		rs.close();
-		ps.close();
-		con.close();
-		return tutorAccademico;
-		}
-		else{
-		System.out.println("TutorAccademico non presente nel database.");
-		rs.close();
-		ps.close();
-		con.close();
-	
-		return null;
+			return null;
 		}
 	}
 	
-	private static final String CARICA_PF_TAC = "SELECT * FROM progetto_formativo WHERE idTutorAccademico=? AND firmaTac='0' AND approvazioneRa='1' AND confermaUst='0'";
-	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi(String idTutorAccademico) throws ClassNotFoundException, SQLException{
+	private static final String CARICA_PF_TAC = "SELECT * FROM progetto_formativo WHERE matricolaTutorAccademico=? AND firmaTac='0' AND approvazioneRa='1' AND confermaUst='0'";
+	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi(String matricolaTutorAccademico) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -62,7 +62,7 @@ public class TutorAccademicoDCS {
 		
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(CARICA_PF_TAC);
-		ps.setString(1, idTutorAccademico);
+		ps.setString(1, matricolaTutorAccademico);
 		
 		rs = ps.executeQuery();
 		
@@ -70,14 +70,12 @@ public class TutorAccademicoDCS {
 			
 			ProgettoFormativo progettoFormativo = new ProgettoFormativo();
 			
-			progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
+			progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 			progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-			progettoFormativo.setIdTaz(rs.getString("idTaz"));
-			progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-			progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idResponsabileAziendalePF"));
-			progettoFormativo.setIdTac(rs.getString("idTac"));
-			progettoFormativo.setIdDd(rs.getString("idDd"));
-			progettoFormativo.setIdPcd(rs.getString("idPcd"));
+			progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+			progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+			progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 			progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 			progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));
@@ -100,8 +98,8 @@ public class TutorAccademicoDCS {
 	}
 
 	
-	private static final String CARICA_PF_FIRMATI_TAC = "SELECT * FROM progetto_formativo WHERE idTutorAccademico=? AND firmaTac='1'";
-	public static ArrayList<ProgettoFormativo> caricaProgettiFormativiFirmati(String idTutorAccademico) throws ClassNotFoundException, SQLException{
+	private static final String CARICA_PF_FIRMATI_TAC = "SELECT * FROM progetto_formativo WHERE matricolaTutorAccademico=? AND firmaTac='1'";
+	public static ArrayList<ProgettoFormativo> caricaProgettiFormativiFirmati(String matricolaTutorAccademico) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -110,7 +108,7 @@ public class TutorAccademicoDCS {
 		
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(CARICA_PF_FIRMATI_TAC);
-		ps.setString(1, idTutorAccademico);
+		ps.setString(1, matricolaTutorAccademico);
 		
 		rs = ps.executeQuery();
 		
@@ -118,14 +116,12 @@ public class TutorAccademicoDCS {
 			
 			ProgettoFormativo progettoFormativo = new ProgettoFormativo();
 			
-			progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
+			progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 			progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-			progettoFormativo.setIdTaz(rs.getString("idTaz"));
-			progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-			progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idResponsabileAziendalePF"));
-			progettoFormativo.setIdTac(rs.getString("idTac"));
-			progettoFormativo.setIdDd(rs.getString("idDd"));
-			progettoFormativo.setIdPcd(rs.getString("idPcd"));
+			progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+			progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+			progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 			progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 			progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));
@@ -148,8 +144,8 @@ public class TutorAccademicoDCS {
 	}
 	
 	
-	private static final String FIRMA_PF_TAC = "UPDATE progetto_formativo SET firmaTac='1' WHERE idProgettoFormativo=? AND idTutorAccademico=? AND approvazioneRa='1' AND firmaTac='0' AND confermaUst='0'";			
-	public static void firmaPF(String idProgettoFormativo, String idTutorAccademico) throws ClassNotFoundException, SQLException{
+	private static final String FIRMA_PF_TAC = "UPDATE progetto_formativo SET firmaTac='1' WHERE idProgettoFormativo=? AND matricolaTutorAccademico=? AND approvazioneRa='1' AND firmaTac='0' AND confermaUst='0'";			
+	public static void firmaPF(int idProgettoFormativo, String matricolaTutorAccademico) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -157,8 +153,8 @@ public class TutorAccademicoDCS {
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(FIRMA_PF_TAC);
 		
-		ps.setString(1, idProgettoFormativo);
-		ps.setString(2, idTutorAccademico);
+		ps.setInt(1, idProgettoFormativo);
+		ps.setString(2, matricolaTutorAccademico);
 		
 		ps.executeUpdate();
 		ps.close();

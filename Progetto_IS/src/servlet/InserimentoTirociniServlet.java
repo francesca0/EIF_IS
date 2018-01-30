@@ -1,90 +1,54 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import dcs.ConnectionManager;
+import domainClasses.ResponsabileAziendale;
+import domainClasses.Tirocinio;
+import utility.ConvertStringToDate;
 
 @WebServlet("/InserimentoTirociniServlet")
-public class InserimentoTirociniServlet extends HttpServlet{
+public class InserimentoTirociniServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	Connection con = null;
-	PreparedStatement ps = null;
-
-    public InserimentoTirociniServlet(){
+    HttpSession session = null;  
+	
+    public InserimentoTirociniServlet() {
         super();
     }
-    
-    // Il metodo init permette l'inizializzazione della Servlet e la connessione al database.
-    
-    public void init(ServletConfig config) throws ServletException{
-		super.init(config);
-		try{
-			con = ConnectionManager.getConnection();
-		}
-		catch(SQLException e){
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		Tirocinio tirocinio = new Tirocinio();
+		session = request.getSession(true);
+		
+		ResponsabileAziendale responsabileAziendale = (ResponsabileAziendale) session.getAttribute("utente");
+		int idResponsabileAziendale = responsabileAziendale.getIdResponsabileAziendale();
+		
+		tirocinio.setIdTirocinio(Integer.parseInt(request.getParameter("idTirocinio")));
+		tirocinio.setIdResponsabileAziendale(idResponsabileAziendale);
+		tirocinio.setIdTutorAziendale(Integer.parseInt((request.getParameter("idTutorAziendale"))));
+		tirocinio.setDescrizione(request.getParameter("descrizione"));
+		tirocinio.setTematica(request.getParameter("tematica"));
+		tirocinio.setNote(request.getParameter("note"));
+		tirocinio.setDataInizio(ConvertStringToDate.convert(request.getParameter("dataInizio")));
+		tirocinio.setDataFine(ConvertStringToDate.convert(request.getParameter("dataFine")));
+		
+		
+		try {
+			tirocinio.inserisciDatiSuDB();
+		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}
+		
 	}
 
-    // Metodo doGet per l'Inserimento dei Tirocini.
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-			
-		String idTirocinio = request.getParameter("idTirocinio");
-		String idResponsabile = request.getParameter("idResponsabile");
-		String idTutorAziendale = request.getParameter("idTutorAziendale");
-		String descrizione = request.getParameter("descrizione");
-		String tematica = request.getParameter("tematica");
-		String note = request.getParameter("note");
-		String dataInizio = request.getParameter("dataInizio");
-		String dataFine = request.getParameter("dataFine");
-		
-		String query = "INSERT INTO tirocinio(idTirocinio, idResponsabile, idTutorAziendale, descrizione, tematica, note, dataInizio, dataFine) VALUES (?,?,?,?,?,?,?,?)";
-		
-		try{
-			con = ConnectionManager.getConnection();
-			ps = con.prepareStatement(query);
-			ps.setString(1, idTirocinio);
-			ps.setString(2, idResponsabile);
-			ps.setString(3, idTutorAziendale);
-			ps.setString(4, descrizione);
-			ps.setString(5, tematica);
-			ps.setString(6, note);
-			ps.setString(7, dataInizio);
-			ps.setString(8, dataFine);
-			
-			ps.executeUpdate(query);
-			
-			destroy();
-		}catch(Exception e){
-			
-		}
-	}
-
-	// Il metodo destroy permette la distruzione della Servlet e la chisura della connessione al database.
-	
-	public void destroy(){
-		try{
-			con.close();
-		}catch(SQLException e){
-			e.printStackTrace();
-		}
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 

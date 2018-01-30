@@ -4,8 +4,8 @@ import dao.TutorAccademicoDAO;
 
 public class TutorAccademico{
 
-		public TutorAccademico(String unIdTutorAccademico, String unNome, String unCognome, String unaEmail, String unaPassword, int unTipoAccount){
-			idTutorAccademico=unIdTutorAccademico;
+		public TutorAccademico(String unaMatricolaTutorAccademico, String unNome, String unCognome, String unaEmail, String unaPassword, int unTipoAccount){
+			matricolaTutorAccademico=unaMatricolaTutorAccademico;
 			nome=unNome;
 			cognome=unCognome;
 			email=unaEmail;
@@ -14,7 +14,7 @@ public class TutorAccademico{
 		}
 		
 		public TutorAccademico() {
-			idTutorAccademico="";
+			matricolaTutorAccademico="";
 			nome="";
 			cognome="";
 			email="";
@@ -22,12 +22,12 @@ public class TutorAccademico{
 			tipoAccount=3;
 		}
 		
-		public String getIdTutorAccademico() {
-			return idTutorAccademico;
+		public String getMatricolaTutorAccademico() {
+			return matricolaTutorAccademico;
 		}
 
-		public void setIdTutorAccademico(String idTutorAccademico) {
-			this.idTutorAccademico = idTutorAccademico;
+		public void setMatricolaTutorAccademico(String matricolaTutorAccademico) {
+			this.matricolaTutorAccademico = matricolaTutorAccademico;
 		}
 
 		public String getNome() {
@@ -71,7 +71,7 @@ public class TutorAccademico{
 		}
 		
 		public String toString() {
-			return "TutorAccademico [idTutorAccademico=" + idTutorAccademico + ", nome=" + nome + ", cognome=" + cognome
+			return "TutorAccademico [matricolaTutorAccademico=" + matricolaTutorAccademico + ", nome=" + nome + ", cognome=" + cognome
 					+ ", email=" + email + ", password=" + password + ", tipoAccount=" + tipoAccount + "]";
 		}
 
@@ -93,7 +93,7 @@ public class TutorAccademico{
 		}
 	
 		
-		String idTutorAccademico;
+		String matricolaTutorAccademico;
 		String nome;
 		String cognome;
 		String email;

@@ -34,9 +34,9 @@ public class TirocinioDCS {
 			
 			Tirocinio tirocinio = new Tirocinio();
 			
-			tirocinio.setIdTirocinio(rs.getString("idTirocinio"));
-			tirocinio.setIdResponsabileAziendaleTrc(rs.getString("idResponsabileAziendaleTrc"));
-			tirocinio.setIdTutorAziendale(rs.getString("idTutorAziendale"));
+			tirocinio.setIdTirocinio(rs.getInt("idTirocinio"));
+			tirocinio.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			tirocinio.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
 			tirocinio.setDescrizione(rs.getString("descrizione"));
 			tirocinio.setTematica(rs.getString("tematica"));
 			tirocinio.setNote(rs.getString("note"));
@@ -55,8 +55,8 @@ public class TirocinioDCS {
 	}
 	
 	
-	private static final String CARICA_TIROCINI_DA_AZIENDA= "SELECT * FROM tirocinio WHERE idResponsabileAziendaleTrc IN(SELECT idResponsabileAziendale FROM responsabile_aziendale WHERE aziendaRa=?)";
-	public static ArrayList<Tirocinio> caricaTirociniDaAzienda(String idAzienda) throws ClassNotFoundException, SQLException{
+	private static final String CARICA_TIROCINI_DA_AZIENDA= "SELECT * FROM tirocinio WHERE idResponsabileAziendale IN(SELECT idResponsabileAziendale FROM responsabile_aziendale WHERE idAzienda=?)";
+	public static ArrayList<Tirocinio> caricaTirociniDaAzienda(int idAzienda) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -66,7 +66,7 @@ public class TirocinioDCS {
 		
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(CARICA_TIROCINI_DA_AZIENDA);
-		ps.setString(1, idAzienda);
+		ps.setInt(1, idAzienda);
 		
 		rs = ps.executeQuery();
 		
@@ -74,9 +74,9 @@ public class TirocinioDCS {
 			
 			Tirocinio tirocinio = new Tirocinio();
 			
-			tirocinio.setIdTirocinio(rs.getString("idTirocinio"));
-			tirocinio.setIdResponsabileAziendaleTrc(rs.getString("idResponsabileAziendaleTrc"));
-			tirocinio.setIdTutorAziendale(rs.getString("idTutorAziendale"));
+			tirocinio.setIdTirocinio(rs.getInt("idTirocinio"));
+			tirocinio.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+			tirocinio.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
 			tirocinio.setDescrizione(rs.getString("descrizione"));
 			tirocinio.setTematica(rs.getString("tematica"));
 			tirocinio.setNote(rs.getString("note"));

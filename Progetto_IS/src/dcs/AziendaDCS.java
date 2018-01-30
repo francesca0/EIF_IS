@@ -13,7 +13,7 @@ public class AziendaDCS {
 	public AziendaDCS(){}
 	
 	private static final String CARICA_AZIENDA_BY_ID = "SELECT * FROM azienda WHERE idAzienda=?";	
-	public static Azienda caricaAzienda(String idAzienda) throws ClassNotFoundException, SQLException{
+	public static Azienda caricaAzienda(int idAzienda) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -22,13 +22,13 @@ public class AziendaDCS {
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(CARICA_AZIENDA_BY_ID);
 		
-		ps.setString(1, idAzienda);
+		ps.setInt(1, idAzienda);
 		rs = ps.executeQuery();
 		
 		if(rs.next()) {
 			Azienda azienda= new Azienda();
 			
-			azienda.setIdAzienda(rs.getString("idAzienda"));
+			azienda.setIdAzienda(rs.getInt("idAzienda"));
 			azienda.setNomeAzienda(rs.getString("nomeAzienda"));
 			azienda.setIndirizzoAzienda(rs.getString("indirizzoAzienda"));
 			azienda.setLocalitaAzienda(rs.getString("localitaAzienda"));
@@ -64,7 +64,7 @@ public class AziendaDCS {
 		while(rs.next()) {
 			Azienda azienda= new Azienda();
 			
-			azienda.setIdAzienda(rs.getString("idAzienda"));
+			azienda.setIdAzienda(rs.getInt("idAzienda"));
 			azienda.setNomeAzienda(rs.getString("nomeAzienda"));
 			azienda.setIndirizzoAzienda(rs.getString("indirizzoAzienda"));
 			azienda.setLocalitaAzienda(rs.getString("localitaAzienda"));
@@ -95,7 +95,7 @@ public class AziendaDCS {
 		while(rs.next()) {
 			Azienda azienda= new Azienda();
 			
-			azienda.setIdAzienda(rs.getString("idAzienda"));
+			azienda.setIdAzienda(rs.getInt("idAzienda"));
 			azienda.setNomeAzienda(rs.getString("nomeAzienda"));
 			azienda.setIndirizzoAzienda(rs.getString("indirizzoAzienda"));
 			azienda.setLocalitaAzienda(rs.getString("localitaAzienda"));
@@ -127,7 +127,7 @@ public class AziendaDCS {
 		while(rs.next()) {
 			Azienda azienda= new Azienda();
 			
-			azienda.setIdAzienda(rs.getString("idAzienda"));
+			azienda.setIdAzienda(rs.getInt("idAzienda"));
 			azienda.setNomeAzienda(rs.getString("nomeAzienda"));
 			azienda.setIndirizzoAzienda(rs.getString("indirizzoAzienda"));
 			azienda.setLocalitaAzienda(rs.getString("localitaAzienda"));

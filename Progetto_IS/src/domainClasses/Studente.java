@@ -6,7 +6,7 @@ import dao.StudenteDAO;
 
 public class Studente{
 
-		public Studente(String unNome, String unCognome, String unaMatricolaStudente, Date unaDataDiNascita, String unLuogoDiNascita, String unaResidenza, String unTelefono, String unTutorAccademico, String unaEmail, String unaPassword, int unTipoAccount){
+		public Studente(String unNome, String unCognome, String unaMatricolaStudente, Date unaDataDiNascita, String unLuogoDiNascita, String unaResidenza, String unTelefono, String unaMatricolaTutorAccademico, String unaEmail, String unaPassword, int unTipoAccount){
 			nome=unNome;
 			cognome=unCognome;
 			matricolaStudente=unaMatricolaStudente;
@@ -14,7 +14,7 @@ public class Studente{
 			luogoDiNascita=unLuogoDiNascita;
 			residenza=unaResidenza;
 			telefono=unTelefono;
-			tutorAccademico=unTutorAccademico;
+			matricolaTutorAccademico=unaMatricolaTutorAccademico;
 			email=unaEmail;
 			password=unaPassword;
 			tipoAccount=unTipoAccount;
@@ -28,7 +28,7 @@ public class Studente{
 			luogoDiNascita="";
 			residenza="";
 			telefono="";
-			tutorAccademico="";
+			matricolaTutorAccademico="";
 			email="";
 			password="";
 			tipoAccount=4;
@@ -91,12 +91,12 @@ public class Studente{
 			this.telefono = telefono;
 		}
 
-		public String getTutorAccademico() {
-			return tutorAccademico;
+		public String getMatricolaTutorAccademico() {
+			return matricolaTutorAccademico;
 		}
 
-		public void setTutorAccademico(String tutorAccademico) {
-			this.tutorAccademico = tutorAccademico;
+		public void setMatricolaTutorAccademico(String matricolaTutorAccademico) {
+			this.matricolaTutorAccademico = matricolaTutorAccademico;
 		}
 
 		public String getEmail() {
@@ -127,7 +127,7 @@ public class Studente{
 		public String toString() {
 			return "Studente [nome=" + nome + ", cognome=" + cognome + ", matricolaStudente=" + matricolaStudente
 					+ ", dataDiNascita=" + dataDiNascita + ", luogoDiNascita=" + luogoDiNascita + ", residenza="
-					+ residenza + ", telefono=" + telefono + ", tutorAccademico=" + tutorAccademico + ", email=" + email
+					+ residenza + ", telefono=" + telefono + ", matricolaTutorAccademico=" + matricolaTutorAccademico + ", email=" + email
 					+ ", password=" + password + ", tipoAccount=" + tipoAccount + "]";
 		}
 
@@ -158,7 +158,7 @@ public class Studente{
 		String luogoDiNascita;
 		String residenza;
 		String telefono;
-		String tutorAccademico;
+		String matricolaTutorAccademico;
 		String email;
 		String password;
 		int tipoAccount;

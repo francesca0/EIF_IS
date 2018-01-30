@@ -12,7 +12,7 @@ public class ProgettoFormativoDAO {
 	public ProgettoFormativoDAO() {
 	}
 	
-private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	public static void insert(ProgettoFormativo progettoFormativo) throws ClassNotFoundException, SQLException{
 		
@@ -22,14 +22,12 @@ private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(INSERT_SQL);
 		
-		ps.setString(1, progettoFormativo.getIdProgettoFormativo());
+		ps.setInt(1, progettoFormativo.getIdProgettoFormativo());
 		ps.setString(2, progettoFormativo.getMatricolaStudente());
-		ps.setString(3, progettoFormativo.getIdTirocinio());
-		ps.setString(4, progettoFormativo.getIdTaz());
-		ps.setString(5, progettoFormativo.getIdResponsabileAziendalePF());
-		ps.setString(6, progettoFormativo.getIdTac());
-		ps.setString(7, progettoFormativo.getIdDd());
-		ps.setString(8, progettoFormativo.getIdPcd());
+		ps.setInt(3, progettoFormativo.getIdTirocinio());
+		ps.setInt(4, progettoFormativo.getIdTutorAziendale());
+		ps.setInt(5, progettoFormativo.getIdResponsabileAziendale());
+		ps.setString(6, progettoFormativo.getMatricolaTutorAccademico());
 		ps.setInt(9, progettoFormativo.getFirmaTaz());
 		ps.setInt(10, progettoFormativo.getApprovazioneRa());
 		ps.setInt(11, progettoFormativo.getFirmaTac());
@@ -57,18 +55,16 @@ private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(FIND_BY_ID);
 		
-		ps.setString(1, progettoFormativo.getIdProgettoFormativo());
+		ps.setInt(1, progettoFormativo.getIdProgettoFormativo());
 		rs = ps.executeQuery();
 		rs.next();
 
-		progettoFormativo.setIdProgettoFormativo(rs.getString("idProgettoFormativo"));
+		progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 		progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
-		progettoFormativo.setIdTirocinio(rs.getString("idTirocinio"));
-		progettoFormativo.setIdTaz(rs.getString("idTaz"));
-		progettoFormativo.setIdResponsabileAziendalePF(rs.getString("idResponsabileAziendalePF"));
-		progettoFormativo.setIdTac(rs.getString("idTac"));
-		progettoFormativo.setIdDd(rs.getString("idDd"));
-		progettoFormativo.setIdPcd(rs.getString("idPcd"));
+		progettoFormativo.setIdTirocinio(rs.getInt("idTirocinio"));
+		progettoFormativo.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
+		progettoFormativo.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+		progettoFormativo.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 		progettoFormativo.setFirmaTaz(rs.getInt("firmaTaz"));
 		progettoFormativo.setApprovazioneRa(rs.getInt("approvazioneRa"));
 		progettoFormativo.setFirmaTac(rs.getInt("firmaTac"));
@@ -86,7 +82,7 @@ private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(
 		
 	}
 	
-	private static final String UPDATE_BY_ID = "UPDATE progetto_formativo SET matricolaStudente=?, idTirocinio=?, idTaz=?, idResponsabileAziendalePF=?, idTac=?, idDd=?, idPcd=?, firmaTaz=?, approvazioneRa=?, firmaTac=?, firmaDd=?, firmaPcd=?, confermaUst=?, nomeFile=?, rifiutato=?, annullato=? WHERE idProgettoFormativo=?";
+	private static final String UPDATE_BY_ID = "UPDATE progetto_formativo SET matricolaStudente=?, idTirocinio=?, idTutorAziendale=?, idResponsabileAziendale=?, matricolaTutorAccademico=?, firmaTaz=?, approvazioneRa=?, firmaTac=?, firmaDd=?, firmaPcd=?, confermaUst=?, nomeFile=?, rifiutato=?, annullato=? WHERE idProgettoFormativo=?";
 	
 	public static void update(ProgettoFormativo progettoFormativo) throws ClassNotFoundException, SQLException{
 		
@@ -96,23 +92,19 @@ private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(UPDATE_BY_ID);
 		
-		ps.setString(17, progettoFormativo.getIdProgettoFormativo());
+		ps.setInt(15, progettoFormativo.getIdProgettoFormativo());
 		ps.setString(1, progettoFormativo.getMatricolaStudente());
-		ps.setString(2, progettoFormativo.getIdTirocinio());
-		ps.setString(3, progettoFormativo.getIdTaz());
-		ps.setString(4, progettoFormativo.getIdResponsabileAziendalePF());
-		ps.setString(5, progettoFormativo.getIdTac());
-		ps.setString(6, progettoFormativo.getIdDd());
-		ps.setString(7, progettoFormativo.getIdPcd());
+		ps.setInt(2, progettoFormativo.getIdTirocinio());
+		ps.setInt(3, progettoFormativo.getIdTutorAziendale());
+		ps.setInt(4, progettoFormativo.getIdResponsabileAziendale());
+		ps.setString(5, progettoFormativo.getMatricolaTutorAccademico());
 		ps.setInt(8, progettoFormativo.getFirmaTaz());
 		ps.setInt(9, progettoFormativo.getApprovazioneRa());
 		ps.setInt(10, progettoFormativo.getFirmaTac());
-		ps.setInt(11, progettoFormativo.getFirmaDd());
-		ps.setInt(12, progettoFormativo.getFirmaPcd());
-		ps.setInt(13, progettoFormativo.getConfermaUst());
-		ps.setString(14, progettoFormativo.getNomeFile());
-		ps.setInt(15, progettoFormativo.getRifiutato());
-		ps.setInt(16, progettoFormativo.getAnnullato());
+		ps.setInt(11, progettoFormativo.getConfermaUst());
+		ps.setString(12, progettoFormativo.getNomeFile());
+		ps.setInt(13, progettoFormativo.getRifiutato());
+		ps.setInt(14, progettoFormativo.getAnnullato());
 		
 		ps.executeUpdate();
 		ps.close();
@@ -130,7 +122,7 @@ private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(DELETE_BY_ID);
 		
-		ps.setString(1, progettoFormativo.getIdProgettoFormativo());
+		ps.setInt(1, progettoFormativo.getIdProgettoFormativo());
 		
 		ps.executeUpdate();
 		ps.close();

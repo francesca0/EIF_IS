@@ -24,9 +24,9 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(INSERT_SQL);
 		
-		ps.setString(1, tirocinio.getIdTirocinio());
-		ps.setString(2, tirocinio.getIdResponsabileAziendaleTrc());
-		ps.setString(3, tirocinio.getIdTutorAziendale());
+		ps.setInt(1, tirocinio.getIdTirocinio());
+		ps.setInt(2, tirocinio.getIdResponsabileAziendale());
+		ps.setInt(3, tirocinio.getIdTutorAziendale());
 		ps.setString(4, tirocinio.getDescrizione());
 		ps.setString(5, tirocinio.getTematica());
 		ps.setString(6, tirocinio.getNote());
@@ -49,13 +49,13 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(FIND_BY_ID);
 		
-		ps.setString(1, tirocinio.getIdTirocinio());
+		ps.setInt(1, tirocinio.getIdTirocinio());
 		rs = ps.executeQuery();
 		rs.next();
 
-		tirocinio.setIdTirocinio(rs.getString("idTirocinio"));
-		tirocinio.setIdResponsabileAziendaleTrc(rs.getString("idResponsabileAziendaleTrc"));
-		tirocinio.setIdTutorAziendale(rs.getString("idTutorAziendale"));
+		tirocinio.setIdTirocinio(rs.getInt("idTirocinio"));
+		tirocinio.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
+		tirocinio.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
 		tirocinio.setDescrizione(rs.getString("descrizione"));
 		tirocinio.setTematica(rs.getString("tematica"));
 		tirocinio.setNote(rs.getString("note"));
@@ -68,7 +68,7 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		
 	}
 	
-	private static final String UPDATE_BY_ID = "UPDATE tirocinio SET idResponsabileAziendaleTrc=?, idTutorAziendale=?, descrizione=?, tematica=?, note=?, dataInizio=?, dataFine=?  WHERE idTirocinio=?";
+	private static final String UPDATE_BY_ID = "UPDATE tirocinio SET idResponsabileAziendale=?, idTutorAziendale=?, descrizione=?, tematica=?, note=?, dataInizio=?, dataFine=?  WHERE idTirocinio=?";
 	
 	public static void update(Tirocinio tirocinio) throws ClassNotFoundException, SQLException{
 		
@@ -78,9 +78,9 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(UPDATE_BY_ID);
 		
-		ps.setString(8, tirocinio.getIdTirocinio());
-		ps.setString(1, tirocinio.getIdResponsabileAziendaleTrc());
-		ps.setString(2, tirocinio.getIdTutorAziendale());
+		ps.setInt(8, tirocinio.getIdTirocinio());
+		ps.setInt(1, tirocinio.getIdResponsabileAziendale());
+		ps.setInt(2, tirocinio.getIdTutorAziendale());
 		ps.setString(3, tirocinio.getDescrizione());
 		ps.setString(4, tirocinio.getTematica());
 		ps.setString(5, tirocinio.getNote());
@@ -103,7 +103,7 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(DELETE_BY_ID);
 		
-		ps.setString(1, tirocinio.getIdTirocinio());
+		ps.setInt(1, tirocinio.getIdTirocinio());
 		
 		ps.executeUpdate();
 		ps.close();
