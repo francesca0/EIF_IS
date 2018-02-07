@@ -14,7 +14,7 @@ public TirocinioDAO(){
 		
 	}
 	
-private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	public static void insert(Tirocinio tirocinio) throws ClassNotFoundException, SQLException{
 			
@@ -23,17 +23,19 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(INSERT_SQL);
+
+		ps.setInt(1, tirocinio.getIdResponsabileAziendale());
+		ps.setInt(2, tirocinio.getIdTutorAziendale());
+		ps.setString(3, tirocinio.getDescrizione());
+		ps.setString(4, tirocinio.getTematica());
+		ps.setString(5, tirocinio.getNote());
+		ps.setDate(6, tirocinio.getDataInizio());
+		ps.setDate(7, tirocinio.getDataFine());
+		ps.setInt(8, tirocinio.getTotaleOre());
+		ps.setInt(9, tirocinio.getNumeroMesi());
 		
-		ps.setInt(1, tirocinio.getIdTirocinio());
-		ps.setInt(2, tirocinio.getIdResponsabileAziendale());
-		ps.setInt(3, tirocinio.getIdTutorAziendale());
-		ps.setString(4, tirocinio.getDescrizione());
-		ps.setString(5, tirocinio.getTematica());
-		ps.setString(6, tirocinio.getNote());
-		ps.setDate(7, tirocinio.getDataInizio());
-		ps.setDate(8, tirocinio.getDataFine());
-	
 		ps.executeUpdate();
+		
 		ps.close();
 		con.close();
 	}
@@ -51,7 +53,7 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		
 		ps.setInt(1, tirocinio.getIdTirocinio());
 		rs = ps.executeQuery();
-		rs.next();
+		if(rs.next()){
 
 		tirocinio.setIdTirocinio(rs.getInt("idTirocinio"));
 		tirocinio.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
@@ -61,14 +63,17 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		tirocinio.setNote(rs.getString("note"));
 		tirocinio.setDataInizio(rs.getDate("dataInizio"));
 		tirocinio.setDataFine(rs.getDate("dataFine"));
-	
+		tirocinio.setTotaleOre(rs.getInt("totaleOre"));
+		tirocinio.setNumeroMesi(rs.getInt("numeroMesi"));
+		}
+		
 		rs.close();
 		ps.close();
 		con.close();
 		
 	}
 	
-	private static final String UPDATE_BY_ID = "UPDATE tirocinio SET idResponsabileAziendale=?, idTutorAziendale=?, descrizione=?, tematica=?, note=?, dataInizio=?, dataFine=?  WHERE idTirocinio=?";
+	private static final String UPDATE_BY_ID = "UPDATE tirocinio SET idResponsabileAziendale=?, idTutorAziendale=?, descrizione=?, tematica=?, note=?, dataInizio=?, dataFine=?, totaleOre=?, numeroMesi=?  WHERE idTirocinio=?";
 	
 	public static void update(Tirocinio tirocinio) throws ClassNotFoundException, SQLException{
 		
@@ -78,7 +83,7 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(UPDATE_BY_ID);
 		
-		ps.setInt(8, tirocinio.getIdTirocinio());
+		ps.setInt(10, tirocinio.getIdTirocinio());
 		ps.setInt(1, tirocinio.getIdResponsabileAziendale());
 		ps.setInt(2, tirocinio.getIdTutorAziendale());
 		ps.setString(3, tirocinio.getDescrizione());
@@ -86,6 +91,8 @@ private static final String INSERT_SQL = "INSERT INTO tirocinio VALUES(?, ?, ?, 
 		ps.setString(5, tirocinio.getNote());
 		ps.setDate(6, tirocinio.getDataInizio());
 		ps.setDate(7, tirocinio.getDataFine());
+		ps.setInt(8, tirocinio.getTotaleOre());
+		ps.setInt(9, tirocinio.getNumeroMesi());
 		
 		ps.executeUpdate();
 		ps.close();

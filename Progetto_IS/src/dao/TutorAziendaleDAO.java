@@ -13,7 +13,7 @@ public class TutorAziendaleDAO {
 		
 	}
 	
-private static final String INSERT_SQL = "INSERT INTO tutor_aziendale VALUES(?, ?, ?, ?, ?, ?)";
+private static final String INSERT_SQL = "INSERT INTO tutor_aziendale VALUES(default, ?, ?, ?, ?, ?, ?, ?)";
 	
 	public static void insert(TutorAziendale tutorAziendale) throws ClassNotFoundException, SQLException{
 			
@@ -23,13 +23,14 @@ private static final String INSERT_SQL = "INSERT INTO tutor_aziendale VALUES(?, 
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(INSERT_SQL);
 		
-		ps.setInt(1, tutorAziendale.getIdTutorAziendale());
-		ps.setString(2, tutorAziendale.getNome());
-		ps.setString(3, tutorAziendale.getCognome());
-		ps.setString(4, tutorAziendale.getEmail());
-		ps.setString(5, tutorAziendale.getPassword());
-		ps.setInt(6, tutorAziendale.getTipoAccount());
-	
+		ps.setString(1, tutorAziendale.getNome());
+		ps.setString(2, tutorAziendale.getCognome());
+		ps.setString(3, tutorAziendale.getEmail());
+		ps.setString(4, tutorAziendale.getPassword());
+		ps.setInt(5, tutorAziendale.getTipoAccount());
+		ps.setInt(6, tutorAziendale.getIdAzienda());
+		ps.setString(6, tutorAziendale.getTelefono());
+		
 		ps.executeUpdate();
 		ps.close();
 		con.close();
@@ -48,7 +49,7 @@ private static final String INSERT_SQL = "INSERT INTO tutor_aziendale VALUES(?, 
 		
 		ps.setInt(1, tutorAziendale.getIdTutorAziendale());
 		rs = ps.executeQuery();
-		rs.next();
+		if(rs.next()){
 
 		tutorAziendale.setIdTutorAziendale(rs.getInt("idTutorAziendale"));
 		tutorAziendale.setNome(rs.getString("nome"));
@@ -56,14 +57,18 @@ private static final String INSERT_SQL = "INSERT INTO tutor_aziendale VALUES(?, 
 		tutorAziendale.setEmail(rs.getString("email"));
 		tutorAziendale.setPassword(rs.getString("password"));
 		tutorAziendale.setTipoAccount(rs.getInt("tipoAccount"));
-	
+		tutorAziendale.setIdAzienda(rs.getInt("idAzienda"));
+		tutorAziendale.setTelefono(rs.getString("telefono"));
+		
+		}
+		
 		rs.close();
 		ps.close();
 		con.close();
 		
 	}
 	
-	private static final String UPDATE_BY_ID = "UPDATE tutor_aziendale SET nome=?, cognome=?, email=?, password=?, tipoAccount=? WHERE idTutorAziendale=?";
+	private static final String UPDATE_BY_ID = "UPDATE tutor_aziendale SET nome=?, cognome=?, email=?, password=?, tipoAccount=?, idAzienda=?, telefono=? WHERE idTutorAziendale=?";
 	
 	public static void update(TutorAziendale tutorAziendale) throws ClassNotFoundException, SQLException{
 		
@@ -73,12 +78,14 @@ private static final String INSERT_SQL = "INSERT INTO tutor_aziendale VALUES(?, 
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(UPDATE_BY_ID);
 		
-		ps.setInt(6, tutorAziendale.getIdTutorAziendale());
+		ps.setInt(8, tutorAziendale.getIdTutorAziendale());
 		ps.setString(1, tutorAziendale.getNome());
 		ps.setString(2, tutorAziendale.getCognome());
 		ps.setString(3, tutorAziendale.getEmail());
 		ps.setString(4, tutorAziendale.getPassword());
 		ps.setInt(5, tutorAziendale.getTipoAccount());
+		ps.setInt(6, tutorAziendale.getIdAzienda());
+		ps.setString(7, tutorAziendale.getTelefono());
 		
 		ps.executeUpdate();
 		ps.close();

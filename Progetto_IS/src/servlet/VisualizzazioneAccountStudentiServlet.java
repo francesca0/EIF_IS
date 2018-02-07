@@ -1,0 +1,56 @@
+package servlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dcs.UfficioDCS;
+
+@WebServlet("/VisualizzazioneAccountStudentiServlet")
+public class VisualizzazioneAccountStudentiServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    HttpSession session = null;   
+	
+    public VisualizzazioneAccountStudentiServlet() {
+    	super();
+    }
+        
+        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    		
+    		session = request.getSession(true);
+    		String pagina="homePage.jsp";
+
+    		//controllo se l'utente è loggato
+    		int tipoAccount = (int) session.getAttribute("tipoAccount");
+    		if(tipoAccount == 1){
+    			
+    			try {
+    				session.setAttribute("listaStudenti", UfficioDCS.caricaAccountStudenti());
+    				pagina="listaStudenti.jsp";
+    			} catch (ClassNotFoundException | SQLException e) {
+    				System.out.println("Errore nel caricamento degli account Studente");
+    				e.printStackTrace();
+    			}
+    			
+    		}
+    		else{//se l'utente non è loggato come ufficio
+    			System.out.println("Non sei loggato come Ufficio!");
+    			session.setAttribute("messaggioErrore", "Non sei loggato come Ufficio!");
+    			pagina = "ErrorPage.jsp";
+    		}
+    		
+    		RequestDispatcher dispatcher = request.getRequestDispatcher(pagina);
+    		dispatcher.forward(request, response);
+    	}
+
+    	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    		doGet(request, response);
+    	}
+}

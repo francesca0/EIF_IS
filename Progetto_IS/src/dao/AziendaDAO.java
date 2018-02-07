@@ -46,12 +46,14 @@ public class AziendaDAO {
 		
 		ps.setInt(1, azienda.getIdAzienda());
 		rs = ps.executeQuery();
-		rs.next();
+		
+		if(rs.next()){
 
 		azienda.setIdAzienda(rs.getInt("idAzienda"));
 		azienda.setNomeAzienda(rs.getString("nomeAzienda"));
 		azienda.setIndirizzoAzienda(rs.getString("indirizzoAzienda"));
 		azienda.setLocalitaAzienda(rs.getString("localitaAzienda"));
+		}
 		
 		rs.close();
 		ps.close();

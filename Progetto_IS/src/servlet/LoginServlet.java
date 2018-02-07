@@ -39,10 +39,15 @@ public class LoginServlet extends HttpServlet {
     }
     					
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException /*aggiungere myexception */{
-			
+		doPost(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//doGet(request, response);
+		
 		String emailForm = request.getParameter("email");					
 		String passwordForm = request.getParameter("password");
-
+		String pagina = "index.html";
 		session = request.getSession(true);	 //Istanzio la sessione
 		RequestDispatcher dispatcher = null;
 		int tipoAccount = 0;
@@ -111,21 +116,17 @@ public class LoginServlet extends HttpServlet {
 			tipoAccount = tipoAccount + 1;				//DIRETTORE DIPARTIMENTO 7
 		}
 		if(obj == null){
-			System.out.println("ACCOUNT NON REGISTRATO");
-			tipoAccount = 0; //mi sentivo piu' sicuro a metterla a zero
-			session.setAttribute("logged", false); 
-			dispatcher = request.getRequestDispatcher("errorPage.jsp"); // QUI RIMANDO ALLA PAGINA DI ERRORE <<< <DA RIVEDEREEEEEEEEEE<<<<
-			dispatcher.forward(request, response);
+			System.out.println("La mail inserita non è collegata a nessun account!");
 		}
 
 
-		boolean userLogged =false;
+		int userLogged =0;
 		 
 		switch(tipoAccount){
 			case 1:{
 				Ufficio utente = (Ufficio) obj;
 				if(utente.getPassword().equals(passwordForm)){
-					userLogged=true;
+					userLogged=1;
 					session.setAttribute("utente", utente);
 					session.setAttribute("tipoAccount", tipoAccount);
 				}
@@ -134,7 +135,7 @@ public class LoginServlet extends HttpServlet {
 			case 2:{
 				TutorAziendale utente = (TutorAziendale) obj;
 				if(utente.getPassword().equals(passwordForm)){
-					userLogged=true;
+					userLogged=1;
 					session.setAttribute("utente", utente);
 					session.setAttribute("tipoAccount", tipoAccount);
 				}
@@ -143,7 +144,7 @@ public class LoginServlet extends HttpServlet {
 			case 3:{
 				TutorAccademico utente = (TutorAccademico) obj;
 				if(utente.getPassword().equals(passwordForm)){
-					userLogged=true;
+					userLogged=1;
 					session.setAttribute("utente", utente);
 					session.setAttribute("tipoAccount", tipoAccount);
 				}
@@ -152,7 +153,7 @@ public class LoginServlet extends HttpServlet {
 			case 4:{
 				Studente utente = (Studente) obj;
 				if(utente.getPassword().equals(passwordForm)){
-					userLogged=true;
+					userLogged=1;
 					session.setAttribute("utente", utente);
 					session.setAttribute("tipoAccount", tipoAccount);
 				}
@@ -161,7 +162,7 @@ public class LoginServlet extends HttpServlet {
 			case 5:{
 				ResponsabileAziendale utente = (ResponsabileAziendale) obj;
 				if(utente.getPassword().equals(passwordForm)){
-					userLogged=true;
+					userLogged=1;
 					session.setAttribute("utente", utente);
 					session.setAttribute("tipoAccount", tipoAccount);
 				}
@@ -170,7 +171,7 @@ public class LoginServlet extends HttpServlet {
 			case 6:{
 				PresidenteConsiglioDidattico utente = (PresidenteConsiglioDidattico) obj;
 				if(utente.getPassword().equals(passwordForm)){
-					userLogged=true;
+					userLogged=1;
 					session.setAttribute("utente", utente);
 					session.setAttribute("tipoAccount", tipoAccount);
 				}
@@ -180,32 +181,35 @@ public class LoginServlet extends HttpServlet {
 			case 7:{
 				DirettoreDipartimento utente = (DirettoreDipartimento) obj;
 				if(utente.getPassword().equals(passwordForm)){
-					userLogged=true;
+					userLogged=1;
 					session.setAttribute("utente", utente);
 					session.setAttribute("tipoAccount", tipoAccount);
 				}
 				break;
 			}	
 				
-			default: System.out.println("ACCOUNT NON REGISTRATO");
+			case 8:{ 
+					System.out.println("La mail inserita non è collegata a nessun account!");
+					session.setAttribute("messaggioErrore", "L'account non è registrato!");
+					pagina = "ErrorPage.jsp";
+					userLogged=2;
+				}
 				break;
 		}
 		
-		if(userLogged == true){
-			
-			System.out.println("UTENTE LOGGATO CORRETTAMENTE");
+		if(userLogged == 1){
+			System.out.println("Password Corretta");
+			session.setAttribute("logged", true);
+			pagina = "homePage.jsp"; /////////////////////////////////////////////////////////////////////////////////////////////////////
 		}
-		else{
-			System.out.println("PASSWORD ERRATA");
+		else if (userLogged == 0){
+			System.out.println("La password inserita è errata!");
+			session.setAttribute("messaggioErrore", "La password inserita è errata!");
+			pagina="ErrorPage.jsp";
 		}
 										
-		session.setAttribute("logged", userLogged);
-		dispatcher = request.getRequestDispatcher("home2.jsp");
+		dispatcher = request.getRequestDispatcher(pagina);
 		dispatcher.forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

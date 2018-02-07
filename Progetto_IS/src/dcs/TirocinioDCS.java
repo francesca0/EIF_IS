@@ -13,7 +13,7 @@ public class TirocinioDCS {
 
 	public TirocinioDCS(){}
 	
-	private static final String CARICA_TIROCINI_RICERCA_DATA= "SELECT * FROM tirocinio WHERE dataInizio BETWEEN >= ? AND ?";
+	private static final String CARICA_TIROCINI_RICERCA_DATA= "SELECT * FROM tirocinio WHERE dataInizio BETWEEN ? AND ?";
 	public static ArrayList<Tirocinio> caricaTirociniRicerca(Date dataInizio, Date dataFine) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
@@ -42,6 +42,8 @@ public class TirocinioDCS {
 			tirocinio.setNote(rs.getString("note"));
 			tirocinio.setDataInizio(rs.getDate("dataInizio"));
 			tirocinio.setDataFine(rs.getDate("dataFine"));
+			tirocinio.setTotaleOre(rs.getInt("totaleOre"));
+			tirocinio.setNumeroMesi(rs.getInt("numeroMesi"));
 			
 			list.add(tirocinio);	
 			
@@ -82,6 +84,8 @@ public class TirocinioDCS {
 			tirocinio.setNote(rs.getString("note"));
 			tirocinio.setDataInizio(rs.getDate("dataInizio"));
 			tirocinio.setDataFine(rs.getDate("dataFine"));
+			tirocinio.setTotaleOre(rs.getInt("totaleOre"));
+			tirocinio.setNumeroMesi(rs.getInt("numeroMesi"));
 			
 			list.add(tirocinio);	
 			
@@ -94,4 +98,29 @@ public class TirocinioDCS {
 		return list;
 	}
 	
+	
+private static final String GET_LAST_ID_TIROCINIO = "select (auto_increment-1) as lastId	from information_schema.tables where table_name = 'tirocinio' and table_schema = 'isdb'";	
+public static int getLastIdTirocinio() throws ClassNotFoundException, SQLException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		con = ConnectionManager.getConnection();
+		ps = con.prepareStatement(GET_LAST_ID_TIROCINIO);
+		rs = ps.executeQuery();
+		int lastId=-1;
+		if(rs.next()){
+			lastId=rs.getInt("lastId");
+			
+		}
+		
+		rs.close();
+		ps.close();
+		con.close();
+		
+		return lastId;
+	}
+	
+
+
 }

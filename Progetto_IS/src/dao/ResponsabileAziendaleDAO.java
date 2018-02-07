@@ -50,7 +50,7 @@ private ResponsabileAziendaleDAO(){
 		
 		ps.setInt(1, responsabileAziendale.getIdResponsabileAziendale());
 		rs = ps.executeQuery();
-		rs.next();
+		if(rs.next()){
 
 		responsabileAziendale.setIdResponsabileAziendale(rs.getInt("idResponsabileAziendale"));
 		responsabileAziendale.setNome(rs.getString("nome"));
@@ -59,6 +59,8 @@ private ResponsabileAziendaleDAO(){
 		responsabileAziendale.setEmail(rs.getString("email"));
 		responsabileAziendale.setPassword(rs.getString("password"));
 		responsabileAziendale.setTipoAccount(rs.getInt("tipoAccount"));
+		
+		}
 		
 		rs.close();
 		ps.close();

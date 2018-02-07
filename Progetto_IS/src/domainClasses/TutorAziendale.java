@@ -4,7 +4,7 @@ import dao.TutorAziendaleDAO;
 
 public class TutorAziendale {
 
-		public TutorAziendale(int unIdTutorAziendale, String unNome, String unCognome, int unIdAzienda, String unaEmail, String unaPassword, int unTipoAccount){
+		public TutorAziendale(int unIdTutorAziendale, String unNome, String unCognome, int unIdAzienda, String unaEmail, String unaPassword, int unTipoAccount, String unTelefono){
 			idTutorAziendale=unIdTutorAziendale;
 			nome=unNome;
 			cognome=unCognome;
@@ -12,6 +12,7 @@ public class TutorAziendale {
 			email=unaEmail;
 			password=unaPassword;
 			tipoAccount=unTipoAccount;
+			telefono=unTelefono;
 		}
 		
 		public TutorAziendale() {
@@ -22,6 +23,7 @@ public class TutorAziendale {
 			email="";
 			password="";
 			tipoAccount=2;
+			telefono="";
 		}
 		
 		public int getIdTutorAziendale() {
@@ -80,10 +82,18 @@ public class TutorAziendale {
 			this.tipoAccount = tipoAccount;
 		}
 		
+		public String getTelefono() {
+			return telefono;
+		}
+
+		public void setTelefono(String telefono) {
+			this.telefono = telefono;
+		}
+		
 		public String toString() {
 			return "TutorAziendale [idTutorAziendale=" + idTutorAziendale + ", nome=" + nome + ", cognome=" + cognome
 					+ ", idAzienda=" + idAzienda + ", email=" + email + ", password=" + password + ", tipoAccount="
-					+ tipoAccount + "]";
+					+ tipoAccount + ", telefono="+ telefono + "]";
 		}
 
 		//Metodi DAO
@@ -106,6 +116,7 @@ public class TutorAziendale {
 		int idTutorAziendale;
 		String nome;
 		String cognome;
+		String telefono;
 		int idAzienda;
 		String email;
 		String password;

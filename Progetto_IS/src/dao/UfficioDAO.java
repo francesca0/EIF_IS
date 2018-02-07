@@ -47,13 +47,15 @@ private static final String INSERT_SQL = "INSERT INTO ufficio VALUES(?, ?, ?, ?)
 		
 		ps.setString(1, ufficio.getIdUfficio());
 		rs = ps.executeQuery();
-		rs.next();
+		if(rs.next()){
 
 		ufficio.setIdUfficio(rs.getString("idUfficio"));
 		ufficio.setEmail(rs.getString("email"));
 		ufficio.setPassword(rs.getString("password"));
 		ufficio.setTipoAccount(rs.getInt("tipoAccount"));
-	
+		
+		}
+		
 		rs.close();
 		ps.close();
 		con.close();

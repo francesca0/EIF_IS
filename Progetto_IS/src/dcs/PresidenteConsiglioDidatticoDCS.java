@@ -53,7 +53,7 @@ public class PresidenteConsiglioDidatticoDCS {
 		}
 		
 		
-		private static final String CARICA_PF_PCD = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND firmaPcd='0' AND confermaUst='0'";
+		private static final String CARICA_PF_PCD = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND firmaPcd='0' AND confermaUst='0' AND annullato='0'";
 		public static ArrayList<ProgettoFormativo> caricaProgettiFormativi() throws ClassNotFoundException, SQLException{
 			
 			Connection con = null;

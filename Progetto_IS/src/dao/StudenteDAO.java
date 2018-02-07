@@ -23,9 +23,9 @@ private static final String INSERT_SQL = "INSERT INTO studente VALUES(?, ?, ?, ?
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(INSERT_SQL);
 		
-		ps.setString(1, studente.getNome());
-		ps.setString(2, studente.getCognome());
-		ps.setString(3, studente.getMatricolaStudente());
+		ps.setString(1, studente.getMatricolaStudente());
+		ps.setString(2, studente.getNome());
+		ps.setString(3, studente.getCognome());	
 		ps.setDate(4, studente.getDataDiNascita());
 		ps.setString(5, studente.getLuogoDiNascita());
 		ps.setString(6, studente.getResidenza());
@@ -54,11 +54,11 @@ private static final String INSERT_SQL = "INSERT INTO studente VALUES(?, ?, ?, ?
 		
 		ps.setString(1, studente.getMatricolaStudente());
 		rs = ps.executeQuery();
-		rs.next();
+		if(rs.next()){
 
-		studente.setNome(rs.getString("nome"));
-		studente.setCognome(rs.getString("cognome"));
 		studente.setMatricolaStudente(rs.getString("matricolaStudente"));
+		studente.setNome(rs.getString("nome"));
+		studente.setCognome(rs.getString("cognome"));	
 		studente.setDataDiNascita(rs.getDate("dataDiNascita"));
 		studente.setLuogoDiNascita(rs.getString("luogoDiNascita"));
 		studente.setResidenza(rs.getString("residenza"));
@@ -67,7 +67,7 @@ private static final String INSERT_SQL = "INSERT INTO studente VALUES(?, ?, ?, ?
 		studente.setEmail(rs.getString("email"));
 		studente.setPassword(rs.getString("password"));
 		studente.setTipoAccount(rs.getInt("tipoAccount"));
-	
+		}
 		rs.close();
 		ps.close();
 		con.close();

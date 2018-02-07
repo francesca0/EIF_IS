@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +15,15 @@ import javax.servlet.http.HttpSession;
 
 import dcs.ResponsabileAziendaleDCS;
 import dcs.TirocinioDCS;
+import domainClasses.ResponsabileAziendale;
 import domainClasses.Tirocinio;
+import utility.ConvertDate;
+
+/* import usati per lo studente , nel caso ne necessitassimo
+import dcs.TirocinioDCS;
+import java.sql.Date;
 import utility.ConvertStringToDate;
+*/
 
 @WebServlet("/VisualizzazioneTirociniServlet")
 public class VisualizzazioneTirociniServlet extends HttpServlet {
@@ -29,34 +37,49 @@ public class VisualizzazioneTirociniServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		session = request.getSession(true);
-				
-		int tipoAccount = (int) session.getAttribute("tipoAccount");
-		ArrayList<Tirocinio> list = new ArrayList<Tirocinio>();
+		String pagina="homePage.jsp";
 
-		if(tipoAccount == 5){	
-			try {
-				list = ResponsabileAziendaleDCS.caricaTirocini(Integer.parseInt((request.getParameter("idResponsabileAziendale"))));
-				session.setAttribute("listaTirocini", list);
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}	
-		}		
-		else if(tipoAccount == 4){	
-			Date dataInizio = ConvertStringToDate.convert(request.getParameter("dataInizio"));
-			Date dataFine = ConvertStringToDate.convert(request.getParameter("dataFine"));
+		//controllo se l'utente è loggato
+		int tipoAccount = (int) session.getAttribute("tipoAccount");
+		if(tipoAccount == 5){
+			
+			ResponsabileAziendale responsabileAziendale = (ResponsabileAziendale) session.getAttribute("utente");
+			int idResponsabileAziendale = responsabileAziendale.getIdResponsabileAziendale();
+			
+				try {
+					ArrayList<Tirocinio> list = new ArrayList<Tirocinio>();
+					list = ResponsabileAziendaleDCS.caricaTirocini(idResponsabileAziendale);
+					session.setAttribute("listaTirocini", list);
+					pagina="gestioneTirocini.jsp";
+				} catch (ClassNotFoundException | SQLException e) {
+					e.printStackTrace();
+				}	
 				
-			try {
-				list = TirocinioDCS.caricaTirociniRicerca(dataInizio, dataFine);
-				session.setAttribute("listaTirocini", list);
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
+			
+			
+			if(tipoAccount == 4){	
+				ArrayList<Tirocinio> list = new ArrayList<Tirocinio>();
+				Date dataInizio = ConvertDate.convertStringToDate(request.getParameter("dataInizio"));
+				Date dataFine = ConvertDate.convertStringToDate(request.getParameter("dataFine"));
+					
+				try {
+					list = TirocinioDCS.caricaTirociniRicerca(dataInizio, dataFine);
+					session.setAttribute("listaTirocini", list);
+				} catch (ClassNotFoundException | SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			
+			
 		}
-		else {
-			System.out.println("Errore sconosciuto, non dovrebbe essere possibile arrivare qui.");
+		else{//se l'utente non è loggato come responsabile aziendale
+			System.out.println("Non sei loggato come responsabile aziendale!");
+			session.setAttribute("messaggioErrore", "Non sei loggato come responsabile aziendale!");
+			pagina = "ErrorPage.jsp";
 		}
 		
-		//commento se va messo qualcosa di ritorno 
+		RequestDispatcher dispatcher = request.getRequestDispatcher(pagina);
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

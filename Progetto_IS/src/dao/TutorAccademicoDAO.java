@@ -49,7 +49,7 @@ public class TutorAccademicoDAO {
 			
 			ps.setString(1, tutorAccademico.getMatricolaTutorAccademico());
 			rs = ps.executeQuery();
-			rs.next();
+			if(rs.next()){
 
 			tutorAccademico.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico"));
 			tutorAccademico.setNome(rs.getString("nome"));
@@ -57,7 +57,9 @@ public class TutorAccademicoDAO {
 			tutorAccademico.setEmail(rs.getString("email"));
 			tutorAccademico.setPassword(rs.getString("password"));
 			tutorAccademico.setTipoAccount(rs.getInt("tipoAccount"));
-		
+			
+			}
+			
 			rs.close();
 			ps.close();
 			con.close();

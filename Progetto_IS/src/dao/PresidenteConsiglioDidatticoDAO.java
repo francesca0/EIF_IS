@@ -49,7 +49,7 @@ private static final String INSERT_SQL = "INSERT INTO presidente_consiglio_didat
 		
 		ps.setString(1, presidenteConsiglioDidattico.getIdPresidenteConsiglioDidattico());
 		rs = ps.executeQuery();
-		rs.next();
+		if(rs.next()){
 
 		presidenteConsiglioDidattico.setIdPresidenteConsiglioDidattico(rs.getString("idPresidenteConsiglioDidattico"));
 		presidenteConsiglioDidattico.setNome(rs.getString("nome"));
@@ -57,6 +57,7 @@ private static final String INSERT_SQL = "INSERT INTO presidente_consiglio_didat
 		presidenteConsiglioDidattico.setEmail(rs.getString("email"));
 		presidenteConsiglioDidattico.setPassword(rs.getString("password"));
 		presidenteConsiglioDidattico.setTipoAccount(rs.getInt("tipoAccount"));
+		}
 		
 		rs.close();
 		ps.close();

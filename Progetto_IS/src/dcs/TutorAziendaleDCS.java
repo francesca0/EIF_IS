@@ -13,8 +13,7 @@ public class TutorAziendaleDCS {
 
 	TutorAziendaleDCS(){}
 	
-private static final String FIND_BY_EMAIL = "SELECT * FROM tutorAziendale WHERE email=?";
-	
+	private static final String FIND_BY_EMAIL = "SELECT * FROM tutor_aziendale WHERE email=?";
 	public static TutorAziendale loadByEmail(String email) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
@@ -52,7 +51,45 @@ private static final String FIND_BY_EMAIL = "SELECT * FROM tutorAziendale WHERE 
 		}
 	}
 	
-	private static final String CARICA_PF_TAZ = "SELECT * FROM progetto_formativo WHERE idTutorAziendale=? AND firmaTaz='0' AND approvazioneRa='1' AND confermaUst='0'";
+	private static final String FIND_BY_ID = "SELECT * FROM tutor_aziendale WHERE idTutorAziendale=?";
+	public static TutorAziendale loadById(int idTutorAziendale) throws ClassNotFoundException, SQLException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		con = ConnectionManager.getConnection();
+		ps = con.prepareStatement(FIND_BY_ID);
+		ps.setInt(1, idTutorAziendale);
+		rs = ps.executeQuery();
+		
+		
+		if(rs.next()){
+			TutorAziendale tutorAziendale = new TutorAziendale();
+			
+			tutorAziendale.setIdTutorAziendale(rs.getInt("idTutorAziendale")); //PK
+			tutorAziendale.setNome(rs.getString("nome"));
+			tutorAziendale.setCognome(rs.getString("cognome"));
+			tutorAziendale.setPassword(rs.getString("password"));
+			tutorAziendale.setTipoAccount(rs.getInt("tipoAccount"));
+			
+			System.out.println("TutorAziendale trovato.");
+			rs.close();
+			ps.close();
+			con.close();
+			return tutorAziendale;
+		}
+		else{
+			System.out.println("TutorAziendale non presente nel database.");
+			rs.close();
+			ps.close();
+			con.close();
+		
+			return null;
+		}
+	}
+	
+	private static final String CARICA_PF_TAZ = "SELECT * FROM progetto_formativo WHERE idTutorAziendale=? AND firmaTaz='0' AND approvazioneRa='1' AND confermaUst='0' AND annullato='0'";
 	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi(int idTutorAziendale) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;

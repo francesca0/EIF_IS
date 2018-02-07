@@ -53,7 +53,7 @@ public class DirettoreDipartimentoDCS {
 	}
 	
 	
-	private static final String CARICA_PF_DD = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND firmaDd='0' AND confermaUst='0'";
+	private static final String CARICA_PF_DD = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND firmaDd='0' AND confermaUst='0' AND annullato='0'";
 	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi() throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
@@ -98,7 +98,7 @@ public class DirettoreDipartimentoDCS {
 	}
 
 	
-	private static final String CARICA_PF_FIRMATI_DD = "SELECT * FROM progetto_formativo WHERE firmaDd='1'";
+	private static final String CARICA_PF_FIRMATI_DD = "SELECT * FROM progetto_formativo WHERE firmaDd='1' ";
 	public static ArrayList<ProgettoFormativo> caricaProgettiFormativiFirmati() throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;

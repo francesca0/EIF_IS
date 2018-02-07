@@ -50,7 +50,7 @@ public class DirettoreDipartimentoDAO {
 		
 		ps.setString(1, direttoreDipartimento.getIdDirettoreDipartimento());
 		rs = ps.executeQuery();
-		rs.next();
+		if(rs.next()){
 
 		direttoreDipartimento.setIdDirettoreDipartimento(rs.getString("idDirettoreDipartimento"));
 		direttoreDipartimento.setNome(rs.getString("nome"));
@@ -58,6 +58,7 @@ public class DirettoreDipartimentoDAO {
 		direttoreDipartimento.setEmail(rs.getString("email"));
 		direttoreDipartimento.setPassword(rs.getString("password"));
 		direttoreDipartimento.setTipoAccount(rs.getInt("tipoAccount"));
+		}
 		
 		rs.close();
 		ps.close();

@@ -81,6 +81,8 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 			tirocinio.setNote(rs.getString("note"));
 			tirocinio.setDataInizio(rs.getDate("dataInizio"));
 			tirocinio.setDataFine(rs.getDate("dataFine"));
+			tirocinio.setTotaleOre(rs.getInt("totaleOre"));
+			tirocinio.setNumeroMesi(rs.getInt("numeroMesi"));
 			
 			list.add(tirocinio);	
 			
@@ -94,7 +96,7 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 	}
 	
 
-	private static final String CARICA_PF_RA = "SELECT * FROM progetto_formativo WHERE idResponsabileAziendale=? AND approvazioneRa='0'";
+	private static final String CARICA_PF_RA = "SELECT * FROM progetto_formativo WHERE idResponsabileAziendale=? AND approvazioneRa='0' AND (rifiutato='0' OR annullato='0')";
 	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi(int idResponsabileAziendale) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
@@ -140,7 +142,7 @@ private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE i
 	}
 
 	
-	private static final String CARICA_PF_APPROVATI_RA = "SELECT * FROM progetto_formativo WHERE idResponsabileAziendale=? AND approvazioneRa='1'";
+	private static final String CARICA_PF_APPROVATI_RA = "SELECT * FROM progetto_formativo WHERE idResponsabileAziendale=? AND (approvazioneRa='1' OR rifiutato='1')";
 	public static ArrayList<ProgettoFormativo> caricaProgettiFormativiApprovati(int idResponsabileAziendale) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;

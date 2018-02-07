@@ -1,15 +1,16 @@
 package domainClasses;
 
 import java.sql.Date;
+import java.util.Objects;
 
 import dao.StudenteDAO;
 
 public class Studente{
 
-		public Studente(String unNome, String unCognome, String unaMatricolaStudente, Date unaDataDiNascita, String unLuogoDiNascita, String unaResidenza, String unTelefono, String unaMatricolaTutorAccademico, String unaEmail, String unaPassword, int unTipoAccount){
+		public Studente(String unaMatricolaStudente, String unNome, String unCognome, Date unaDataDiNascita, String unLuogoDiNascita, String unaResidenza, String unTelefono, String unaMatricolaTutorAccademico, String unaEmail, String unaPassword, int unTipoAccount){
+			matricolaStudente=unaMatricolaStudente;
 			nome=unNome;
 			cognome=unCognome;
-			matricolaStudente=unaMatricolaStudente;
 			dataDiNascita=unaDataDiNascita;
 			luogoDiNascita=unLuogoDiNascita;
 			residenza=unaResidenza;
@@ -21,9 +22,9 @@ public class Studente{
 		}
 		
 		public Studente() {
+			matricolaStudente="";
 			nome="";
 			cognome="";
-			matricolaStudente="";
 			dataDiNascita=null;
 			luogoDiNascita="";
 			residenza="";
@@ -124,12 +125,6 @@ public class Studente{
 		}
 
 
-		public String toString() {
-			return "Studente [nome=" + nome + ", cognome=" + cognome + ", matricolaStudente=" + matricolaStudente
-					+ ", dataDiNascita=" + dataDiNascita + ", luogoDiNascita=" + luogoDiNascita + ", residenza="
-					+ residenza + ", telefono=" + telefono + ", matricolaTutorAccademico=" + matricolaTutorAccademico + ", email=" + email
-					+ ", password=" + password + ", tipoAccount=" + tipoAccount + "]";
-		}
 
 		
 		//Metodi DAO
@@ -149,8 +144,39 @@ public class Studente{
 			StudenteDAO.delete(this);
 		}
 
-		
-		
+	
+		public String toString() {
+			return "Studente [matricolaStudente=" + matricolaStudente + ", nome=" + nome + ", cognome=" + cognome + ", dataDiNascita=" + dataDiNascita + ", luogoDiNascita=" + luogoDiNascita + ", residenza="
+					+ residenza + ", telefono=" + telefono + ", matricolaTutorAccademico=" + matricolaTutorAccademico + ", email=" + email
+					+ ", password=" + password + ", tipoAccount=" + tipoAccount + "]";
+		}
+
+		public boolean equals(Object obj) {
+
+	        if (obj == this) return true;
+	        if (!(obj instanceof Studente)) {
+	            return false;
+	        }
+	        Studente studente = (Studente) obj;
+	        return nome.equals(studente.nome) &&
+	        		cognome.equals(studente.cognome) &&
+	        		matricolaStudente.equals(matricolaStudente) &&
+	        		Objects.equals(dataDiNascita, studente.dataDiNascita) &&
+	                luogoDiNascita.equals(luogoDiNascita) &&
+	                residenza.equals(studente.residenza) &&
+	                telefono.equals(studente.telefono) &&
+	                matricolaTutorAccademico.equals(studente.matricolaTutorAccademico) &&
+	                email.equals(studente.email) &&
+	                password.equals(studente.password) &&
+	                tipoAccount == studente.tipoAccount;
+	    }
+
+	 
+	    public int hashCode() {
+	        return Objects.hash(nome,cognome,matricolaStudente,dataDiNascita,luogoDiNascita,residenza,telefono,matricolaTutorAccademico,email,password,tipoAccount);
+	    }
+
+
 		String nome;
 		String cognome;
 		String matricolaStudente;

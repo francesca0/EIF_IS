@@ -53,7 +53,7 @@ public class StudenteDCS {
 			}
 		}
 		
-		private static final String VISIONA_PF = "SELECT * FROM progetto_formativo WHERE matricolaStudente=? AND annullato='0' AND rifiutato='0'";
+		private static final String VISIONA_PF = "SELECT * FROM progetto_formativo WHERE matricolaStudente=?";
 		public static ProgettoFormativo caricaProgettoFormativo(String matricolaStudente) throws ClassNotFoundException, SQLException{
 			
 			Connection con = null;

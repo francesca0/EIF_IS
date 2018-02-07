@@ -29,30 +29,30 @@ public class UfficioDCS {
 		
 		
 		if(rs.next()){
-		Ufficio ufficio = new Ufficio();
-		
-		ufficio.setIdUfficio(rs.getString("idUfficio"));
-		ufficio.setEmail(rs.getString("email"));
-		ufficio.setPassword(rs.getString("password"));
-		ufficio.setTipoAccount(rs.getInt("tipoAccount"));
-		
-		System.out.println("Ufficio trovato.");
-		rs.close();
-		ps.close();
-		con.close();
-		return ufficio;
+			Ufficio ufficio = new Ufficio();
+			
+			ufficio.setIdUfficio(rs.getString("idUfficio"));
+			ufficio.setEmail(rs.getString("email"));
+			ufficio.setPassword(rs.getString("password"));
+			ufficio.setTipoAccount(rs.getInt("tipoAccount"));
+			
+			System.out.println("Ufficio trovato.");
+			rs.close();
+			ps.close();
+			con.close();
+			return ufficio;
 		}
 		else{
-		System.out.println("Ufficio non presente nel database.");
-		rs.close();
-		ps.close();
-		con.close();
+			System.out.println("Ufficio non presente nel database.");
+			rs.close();
+			ps.close();
+			con.close();
 	
-		return null;
+			return null;
 		}
 	}
 	
-private static final String CARICA_PF_UFFICIO = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND confermaUst='0'";
+private static final String CARICA_PF_UFFICIO = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND confermaUst='0' AND annullato='0'";
 	
 	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi() throws ClassNotFoundException, SQLException{
 		
@@ -96,9 +96,9 @@ private static final String CARICA_PF_UFFICIO = "SELECT * FROM progetto_formativ
 		return list;
 	}
 	
-private static final String CARICA_PF_CONFERMATI_UFFICIO = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND confermaUst='1'";
+private static final String CARICA_PF_COMPLETATI_UFFICIO = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND (confermaUst='1' OR annullato='1')";
 	
-	public static ArrayList<ProgettoFormativo> caricaProgettiFormativiConfermati() throws ClassNotFoundException, SQLException{
+	public static ArrayList<ProgettoFormativo> caricaProgettiFormativiCompletati() throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -106,7 +106,7 @@ private static final String CARICA_PF_CONFERMATI_UFFICIO = "SELECT * FROM proget
 		ArrayList<ProgettoFormativo> list = new ArrayList<ProgettoFormativo>();
 		
 		con = ConnectionManager.getConnection();
-		ps = con.prepareStatement(CARICA_PF_CONFERMATI_UFFICIO);
+		ps = con.prepareStatement(CARICA_PF_COMPLETATI_UFFICIO);
 		rs = ps.executeQuery();
 		
 		while(rs.next()){

@@ -13,7 +13,7 @@ public class TutorAccademicoDCS {
 
 	TutorAccademicoDCS(){}
 	
-	private static final String FIND_BY_EMAIL = "SELECT * FROM tutorAccademico WHERE email=?";
+	private static final String FIND_BY_EMAIL = "SELECT * FROM tutor_accademico WHERE email=?";
 	
 	public static TutorAccademico loadByEmail(String email) throws ClassNotFoundException, SQLException{
 		
@@ -24,6 +24,45 @@ public class TutorAccademicoDCS {
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(FIND_BY_EMAIL);
 		ps.setString(1, email);
+		rs = ps.executeQuery();
+		
+		
+		if(rs.next()){
+			TutorAccademico tutorAccademico = new TutorAccademico();
+			
+			tutorAccademico.setMatricolaTutorAccademico(rs.getString("matricolaTutorAccademico")); //PK
+			tutorAccademico.setNome(rs.getString("nome"));
+			tutorAccademico.setCognome(rs.getString("cognome"));
+			tutorAccademico.setPassword(rs.getString("password"));
+			tutorAccademico.setTipoAccount(rs.getInt("tipoAccount"));
+			
+			System.out.println("TutorAccademico trovato.");
+			rs.close();
+			ps.close();
+			con.close();
+			return tutorAccademico;
+		}
+			else{
+				System.out.println("TutorAccademico non presente nel database.");
+				rs.close();
+				ps.close();
+				con.close();
+			
+				return null;
+			}
+	}
+	
+	private static final String FIND_BY_MATRICOLA = "SELECT * FROM tutor_accademico WHERE matricolaTutorAccademico=?";
+	
+	public static TutorAccademico loadByMatricola(String matricolaTutorAccademico) throws ClassNotFoundException, SQLException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		con = ConnectionManager.getConnection();
+		ps = con.prepareStatement(FIND_BY_MATRICOLA);
+		ps.setString(1, matricolaTutorAccademico);
 		rs = ps.executeQuery();
 		
 		
@@ -52,7 +91,7 @@ public class TutorAccademicoDCS {
 		}
 	}
 	
-	private static final String CARICA_PF_TAC = "SELECT * FROM progetto_formativo WHERE matricolaTutorAccademico=? AND firmaTac='0' AND approvazioneRa='1' AND confermaUst='0'";
+	private static final String CARICA_PF_TAC = "SELECT * FROM progetto_formativo WHERE matricolaTutorAccademico=? AND firmaTac='0' AND approvazioneRa='1' AND confermaUst='0' AND annullato='0'";
 	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi(String matricolaTutorAccademico) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;

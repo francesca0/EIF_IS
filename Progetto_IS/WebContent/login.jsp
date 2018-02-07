@@ -10,59 +10,52 @@
     <link rel="icon" href="../../favicon.ico">
 
 
-   <title>pagina</title>
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"> 			<!-- inclusione stile di bootstrap -->
-    <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">    <!-- Bootstrap theme -->
-	<link rel="stylesheet" href="bootstrap/style.css"> 						<!--  css modificato -->
+   <title>Login</title>
 	
-    
+	<jsp:include page="datiCss.jsp" />
+	
   </head>
 
   <body>
+<%@ page errorPage = "ErrorPage.jsp" %>
 
-<div class="container">
-	
-	<div class="row">
+	 <div class="container-fluid row"> 
+	<div class="col-xs-2 col-sm-3 col-md-4">
+	</div>
 		
-		<div class="col-md-6 col-md-offset-3">
+		<div class="col-xs-8 col-sm-6 col-md-4">
 			
-			<div class="panel panel-default" style="height:400px;width:500px">
-			<img src="images/logo_sito.png" class="img-responsive">
+			<div class="panel panel-default">
+			
 			<div class="panel-body">
+			<img src="images/logo_sito.png" alt="logo" class="img-responsive">
 			
-			<form>
-  
+			
+			<form name="loginForm" method="post" action="LoginServlet">
   				<div class="input-group">
-    			<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-    			<input id="email" type="text" class="form-control" name="email" placeholder="Email">
+    				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    				<input id="email" type="text" class="form-control" name="email" placeholder="Email" required>
   				</div>
   
   				<div class="input-group">
-    			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-    			<input id="password" type="password" class="form-control" name="password" placeholder="Password">
+    				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    				<input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
   				</div>
 
-	<br>
-      					<div style="text-align:center">
-      						<button type="submit" class="btn btn-default">Login</button>
-    					</div>
-    			
-			
+	
+      			<div style="text-align:center">
+      				<input type="submit" class="btn btn-default" value="Login">
+    			</div>
 			</form> 
-			
-			
-			
 			</div><!-- panel-body -->
 			
 			
 			</div> <!-- panel --> 
 		
 		</div><!-- col --> 
-	
-	</div><!-- row --> 
-
-</div><!-- container -->
-
+		<div class="col-xs-2 col-sm-3 col-md-4">
+		</div>
+	</div>
 
 
 

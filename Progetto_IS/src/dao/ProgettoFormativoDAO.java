@@ -57,7 +57,7 @@ private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(
 		
 		ps.setInt(1, progettoFormativo.getIdProgettoFormativo());
 		rs = ps.executeQuery();
-		rs.next();
+		if(rs.next()){
 
 		progettoFormativo.setIdProgettoFormativo(rs.getInt("idProgettoFormativo"));
 		progettoFormativo.setMatricolaStudente(rs.getString("matricolaStudente"));
@@ -74,7 +74,8 @@ private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(
 		progettoFormativo.setNomeFile(rs.getString("nomeFile"));
 		progettoFormativo.setRifiutato(rs.getInt("rifiutato"));
 		progettoFormativo.setAnnullato(rs.getInt("annullato"));
-
+		
+		}
 		
 		rs.close();
 		ps.close();

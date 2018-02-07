@@ -11,15 +11,13 @@
 
 
    <title>pagina</title>
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"> 			<!-- inclusione stile di bootstrap -->
-    <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">    <!-- Bootstrap theme -->
-	<link rel="stylesheet" href="bootstrap/style.css"> 						<!--  css modificato -->
 	
-    
+	<jsp:include page="datiCss.jsp" />
+	
   </head>
 
   <body>
-
+<!--  base1 -->
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container-fluid centered">
@@ -40,27 +38,24 @@
 			<span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width:100%">
+			
+<!-- DATI INCLUSI -->			
 			<li><a href="#" >Lorem ipsum</a></li>
 			<li><a href="#" >Lorem ipsum</a></li>
 			<li><a href="#" >Lorem ipsum <span class="badge">14</span></a></li>
 			<li role="separator" class="divider"></li>
 			<li><a href="#">Lorem ipsum <span class="badge">14</span></a></li>
-		  </ul>
-		 
-		</div>
-		 <hr id="menudropdown">
-		<!-- fine menu xs-->
-		
-		<!-- MENU SM MD-->
-    <div class="list-group" style="border:1px solid;border-radius:4px" id="menulaterale">
-        <span class="list-group-item active" style="text-align:center"> Menu </span>
-		
+
+		  </ul></div><hr id="menudropdown"><!-- fine menu xs--><!-- MENU SM MD--><div class="list-group" style="border:1px solid;border-radius:4px" id="menulaterale"><span class="list-group-item active" style="text-align:center"> Menu </span>
+
         <a href="#" class="list-group-item">Lorem ipsum</a>
         <a href="#" class="list-group-item">Lorem ipsum</a>
         <a href="#" class="list-group-item">Lorem ipsum</a>
         <a href="#" class="list-group-item">Lorem ipsum <span class="badge">14</span></a>
         <a href="#" class="list-group-item">Lorem ipsum <span class="badge">14</span> </a>
         <a href="#" class="list-group-item">Lorem ipsum</a>
+<!--FINE DATI INCLUSI -->
+
     </div>
 	<!-- fine menu sm md -->        
 </div> <!-- col  -->
@@ -69,10 +64,14 @@
 			<div class="panel panel-default" style="border:1px solid;">
 				<div class="panel-heading">Welcome to easy-Information!</div>
 				<div class="panel-body" style="max-height: 500px;overflow-y: scroll;">
+			
+<!-- DATI INCLUSI base1-->
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quam arcu, interdum ullamcorper eros vel, varius bibendum felis. Sed in dignissim metus. Vivamus in ante vitae justo fermentum convallis sit amet nec ligula. Curabitur vestibulum ut nibh ornare malesuada. Aenean accumsan libero id sagittis sagittis. Curabitur diam nisl, imperdiet vel fermentum a, egestas sed magna. Nam placerat quam ut finibus blandit. Nullam orci dui, lacinia ac mauris eu, aliquam commodo risus. Aenean pharetra venenatis mollis. Morbi pellentesque tristique ultrices. Sed lacinia risus id ipsum vulputate, nec tincidunt est commodo.
 				Suspendisse et hendrerit nibh. Etiam et justo posuere, porttitor velit ut, pulvinar metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer leo tortor, malesuada condimentum nunc laoreet, lobortis porttitor metus. Etiam nec faucibus tellus. Cras sem libero, laoreet at felis ac, auctor malesuada purus. Curabitur at risus consequat, luctus dui sed, interdum tortor. Nam mattis, nibh ac pellentesque dapibus, risus mauris imperdiet odio, ut iaculis lectus eros eu neque. Nullam non ornare tellus. Aenean nec orci id ante elementum aliquet.
 				Pellentesque ac erat sapien. Nam pharetra neque ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec placerat at leo quis posuere. Nam sit amet aliquet sapien. Integer accumsan vitae dolor nec iaculis. Morbi ac urna dui. Sed luctus vehicula sem, eu ornare est ornare vel. Sed sapien elit, tincidunt quis elementum sit amet, pretium nec enim. In nec elit dignissim ipsum lobortis viverra. Donec viverra sit amet est vitae posuere. Pellentesque urna diam, efficitur at justo at, elementum convallis ante. Donec ac rhoncus purus. Mauris mattis at urna vitae sollicitudin. Phasellus non gravida ex, nec euismod justo.
-				Etiam iaculis erat felis, at bibendum augue volutpat eu. Donec ac lectus dictum diam dictum laoreet. Sed vitae bibendum dolor, sed ultricies turpis. In a neque non lacus elementum faucibus. In viverra eget mauris non aliquet. Curabitur ut faucibus felis, eget laoreet eros. Proin ut mi mi. Nunc nulla sapien, lobortis eget luctus ac, ultrices eu eros.Aliquam vitae enim pretium massa luctus blandit. Integer cursus est nec elit eleifend molestie. Cras blandit nisl eget massa congue fringilla. Cras nunc ligula, volutpat non dapibus at, auctor eget tortor. Nam ullamcorper id leo non porta. Vivamus gravida hendrerit leo. Cras in risus scelerisque, malesuada purus ut, porttitor justo. Nulla aliquet rutrum metus non posuere. Curabitur tincidunt, odio ac vulputate ultricies, velit massa interdum leo, ac maximus lorem odio sit amet orci. Donec mattis finibus volutpat. Ut sagittis sem vitae urna efficitur fermentum vel ac tellus.
+				Etiam iaculis erat felis, at bibendum augue volutpat eu. Donec ac lectus dictum diam dictum laoreet. Sed vitae bibendum dolor, sed ultricies turpis. In a neque non lacus elementum faucibus. In viverra eget mauris non aliquet. Curabitur ut faucibus felis, eget laoreet eros. Proin ut mi mi. Nunc nulla sapien, lobortis eget luctus ac, ultrices eu eros.Aliquam vitae enim pretium massa luctus blandit. Integer cursus est nec elit eleifend molestie. Cras blandit nisl eget massa congue fringilla. Cras nunc ligula, volutpat non dapibus at, auctor eget tortor. Nam ullamcorper id leo non porta. Vivamus gravida hendrerit leo. Cras in risus scelerisque, malesuada purus ut, porttitor justo. Nulla aliquet rutrum metus non posuere. Curabitur tincidunt, odio ac vulputate ultricies, velit massa interdum leo, ac maximus lorem odio sit amet orci. Donec mattis finibus volutpat. Ut sagittis sem vitae urna efficitur fermentum vel ac tellus.		
+<!-- DATI INCLUSI base2 -->
+				
 				</div>
 			</div>
 		</div>
@@ -90,7 +89,7 @@
       </div>
     </footer>
 
-
+<!--  base2 -->
   
     <!-- Bootstrap core JavaScript
     //script aggiuntivi
