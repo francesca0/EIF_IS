@@ -41,6 +41,24 @@ public class ProgettoFormativo {
 			annullato=0;
 		}
 		
+		//Costruttore per l'invio di un nuovo progetto
+		public ProgettoFormativo(String unaMatricolaStudente, int unIdTirocinio, int unIdTutorAziendale, String unaMatricolaTutorAccademico, int unIdResponsabileAziendale, String unNomeFile){
+			idProgettoFormativo=0;
+			matricolaStudente=unaMatricolaStudente;
+			idTirocinio=unIdTirocinio;
+			idTutorAziendale=unIdTutorAziendale;
+			matricolaTutorAccademico=unaMatricolaTutorAccademico;
+			idResponsabileAziendale=unIdResponsabileAziendale;
+			firmaTaz=0;
+			approvazioneRa=0;
+			firmaTac=0;
+			firmaDd=0;
+			firmaPcd=0;
+			confermaUst=0;
+			nomeFile=unNomeFile;
+			rifiutato=0;
+			annullato=0;
+		}
 		
 		public int getIdProgettoFormativo() {
 			return idProgettoFormativo;

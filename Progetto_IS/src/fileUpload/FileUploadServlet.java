@@ -21,13 +21,16 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 @WebServlet("/FileUploadServlet")
 public class FileUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L; 
-	HttpSession session=null;
-	String pagina="index.html";
+	
 	
     public FileUploadServlet() {
         super();
     }
 
+    //variabili sessione e pagina
+    HttpSession session=null;
+	String pagina="index.html";
+    
  // Path di salvataggio dei dati
     private static final String UPLOAD_DIRECTORY = "C:"+File.separator+"ProgettiFormativiServer";
 

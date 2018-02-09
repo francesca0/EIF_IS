@@ -1,6 +1,10 @@
 package servlet;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,61 +12,136 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dcs.ProgettoFormativoDCS;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import domainClasses.ProgettoFormativo;
 import domainClasses.Studente;
 import domainClasses.Tirocinio;
 
+
 @WebServlet("/InvioProgettoFormativoServlet")
 public class InvioProgettoFormativoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	HttpSession session=null;
 	
     public InvioProgettoFormativoServlet() {
         super();
     }
 
+    //variabili sessione e pagina
+    HttpSession session=null;
+	String pagina="index.html";
+    
+ // Path di salvataggio dei dati
+    private static final String UPLOAD_DIRECTORY = "C:"+File.separator+"ProgettiFormativiServer";
+
+    // Settings di Upload
+    private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
+    private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
+    private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
+ 
+    
+    //doget
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    	session=request.getSession(true);
+    	doPost(request, response);
+    }
+    
+    /**
+     * Quando riceve il submit dell' upload del file , fa il parse della request per leggerne i dati in upload e salvarli sul disco.
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    	int idProgettoFormativo=0; // DEVE ESSERE RESO AUTOINCREMENTALE
-  
+    	session = request.getSession(true);
+    	
+    	//Prepariamo i dati per il Progetto Formativo
     	Studente studente = (Studente) session.getAttribute("utente");
+    	String matricolaStudente = studente.getMatricolaStudente();
     	
-    	String matricolaStudente= studente.getMatricolaStudente();
+    	//tirocinio scelto
+    	int idTirocinio= Integer.parseInt(request.getParameter("idTirocinioScelto"));
     	
-    	int idTirocinio=Integer.parseInt(request.getParameter("idTirocinioScelto")); // DEVE ESSERE RESO AUTOINCREMENTALE
-    	
-    	Tirocinio tirocinio = new Tirocinio();
-    	
+    	Tirocinio tirocinio= new Tirocinio();
     	tirocinio.setIdTirocinio(idTirocinio);
-    	try {
-			tirocinio.leggiDatiDaDB();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	int idTutorAziendale = tirocinio.getIdTutorAziendale();
     	
-    	int  idTutorAziendale = tirocinio.getIdTutorAziendale();
-    	String matricolaTutorAccademico = studente.getMatricolaTutorAccademico(); // va cambiato in idTutorAccademico
-    	int idResponsabileAziendale=tirocinio.getIdResponsabileAziendale();
-    	
-    	String nomeFile=request.getParameter("nomeFile");
-    	
-    	ProgettoFormativo progettoFormativo = new ProgettoFormativo(idProgettoFormativo, matricolaStudente, idTirocinio, idTutorAziendale, matricolaTutorAccademico, idResponsabileAziendale, 0, 0, 0, 0, 0, 0, nomeFile, 0, 0);
-    	
-    	try {
-			progettoFormativo.inserisciDatiSuDB();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    	
-    	da completare
-  	}
-    	
-   	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-   		doGet(request, response);
-   	}
-
+    	String matricolaTutorAccademico = studente.getMatricolaTutorAccademico();
+    	int idResponsabileAziendale = tirocinio.getIdResponsabileAziendale();
+    	String nomeFile="";
+    	// Fine dichiarazioni di inserimento
+    	   	
+    	// Controlliamo se la request contiene il file da caricare
+        if (!ServletFileUpload.isMultipartContent(request)) {
+        	System.out.println("La request non contiene alcun file da caricare");
+			session.setAttribute("messaggioErrore", "La request non contiene alcun file da caricare!");
+			pagina = "ErrorPage.jsp";
+        }
+        else{
+	        // Configurazione settings di upload
+	        DiskFileItemFactory factory = new DiskFileItemFactory();
+	        // set del memory threshold -oltre questo i file sono salvati su disco
+	        factory.setSizeThreshold(MEMORY_THRESHOLD);
+	        // set della temporary location dove salvare i file
+	        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+	 
+	        ServletFileUpload upload = new ServletFileUpload(factory);
+	         
+	        // sets maximum size of upload file
+	        upload.setFileSizeMax(MAX_FILE_SIZE);
+	         
+	        // sets maximum size of request (include file + form data)
+	        upload.setSizeMax(MAX_REQUEST_SIZE);
+	 
+	        // settiamo il path di upload
+	        String uploadPath = UPLOAD_DIRECTORY;
+	        
+	        // crea la directory nel caso non esistesse
+	        File uploadDir = new File(uploadPath);
+	        if (!uploadDir.exists()) {
+	            uploadDir.mkdir();
+	        }
+	 
+	        try {
+	            // parsing del contenuto della request per ottenerne i dati
+	            List<FileItem> formItems = upload.parseRequest(request);
+	 
+	            if (formItems != null && formItems.size() > 0) {
+	                // itera sui campi del form
+	                for (FileItem item : formItems) {
+	                    // processa solo i campi che non sono campi del form
+	                    if (!item.isFormField()) {
+	                        String fileName = new File(item.getName()).getName();
+	                        //int expectedId = ProgettoFormativoDCS.
+	                        //fileName = "progetto_formativo_id_"+expectedId;
+	                        String filePath = uploadPath + File.separator + fileName;
+	                        File storeFile = new File(filePath);
+	 
+	                        // salva i file su disco
+	                        item.write(storeFile);
+	                        System.out.println("FILE CARICATO CORRETTAMENTE");
+	                        
+	                        ///INSERIRE I DATI DI  CARICAMENTO E RELATIVA COSTRUZIONE DEL PROGETTO FORMATIVO
+//CHECK NOME 
+	                        //progettoFormativo
+	                    	ProgettoFormativo progettoFormativo = new ProgettoFormativo(matricolaStudente, idTirocinio, idTutorAziendale, matricolaTutorAccademico, idResponsabileAziendale, nomeFile);
+	                    	progettoFormativo.inserisciDatiSuDB();
+	                        
+	                        session.setAttribute("progettoInviato", 1);
+	                        pagina = "visioneProgettiFormativiServlet"; //servlet per la visualizzazione del progetto dello studente
+	                        
+	                    }
+	                }
+	            }
+	        } catch (Exception ex) {
+	        	System.out.println("Errore nel caricamento del file"+ ex.getMessage());
+				session.setAttribute("messaggioErrore", "Errore nel caricamento del file :" + ex.getMessage());
+				pagina = "ErrorPage.jsp";
+	        }
+	        // redirect
+	        RequestDispatcher dispatcher = request.getRequestDispatcher(pagina);
+			dispatcher.forward(request, response);
+	    }
+    }
+    
 
 }
