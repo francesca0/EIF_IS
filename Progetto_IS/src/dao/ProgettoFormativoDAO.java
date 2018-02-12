@@ -12,7 +12,7 @@ public class ProgettoFormativoDAO {
 	public ProgettoFormativoDAO() {
 	}
 	
-private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	public static void insert(ProgettoFormativo progettoFormativo) throws ClassNotFoundException, SQLException{
 		
@@ -21,23 +21,21 @@ private static final String INSERT_SQL = "INSERT INTO progetto_formativo VALUES(
 		
 		con = ConnectionManager.getConnection();
 		ps = con.prepareStatement(INSERT_SQL);
-		
-		ps.setInt(1, progettoFormativo.getIdProgettoFormativo());
-		ps.setString(2, progettoFormativo.getMatricolaStudente());
-		ps.setInt(3, progettoFormativo.getIdTirocinio());
-		ps.setInt(4, progettoFormativo.getIdTutorAziendale());
-		ps.setInt(5, progettoFormativo.getIdResponsabileAziendale());
-		ps.setString(6, progettoFormativo.getMatricolaTutorAccademico());
-		ps.setInt(9, progettoFormativo.getFirmaTaz());
-		ps.setInt(10, progettoFormativo.getApprovazioneRa());
-		ps.setInt(11, progettoFormativo.getFirmaTac());
-		ps.setInt(12, progettoFormativo.getFirmaDd());
-		ps.setInt(13, progettoFormativo.getFirmaPcd());
-		ps.setInt(14, progettoFormativo.getConfermaUst());
-		ps.setString(15, progettoFormativo.getNomeFile());
-		ps.setInt(16, progettoFormativo.getRifiutato());
-		ps.setInt(17, progettoFormativo.getAnnullato());
 
+		ps.setString(1, progettoFormativo.getMatricolaStudente());
+		ps.setInt(2, progettoFormativo.getIdTirocinio());
+		ps.setInt(3, progettoFormativo.getIdTutorAziendale());
+		ps.setString(4, progettoFormativo.getMatricolaTutorAccademico());
+		ps.setInt(5, progettoFormativo.getIdResponsabileAziendale());	
+		ps.setInt(6, progettoFormativo.getApprovazioneRa());
+		ps.setInt(7, progettoFormativo.getFirmaTaz());
+		ps.setInt(8, progettoFormativo.getFirmaTac());
+		ps.setInt(9, progettoFormativo.getFirmaDd());
+		ps.setInt(10, progettoFormativo.getFirmaPcd());
+		ps.setInt(11, progettoFormativo.getConfermaUst());
+		ps.setInt(12, progettoFormativo.getRifiutato());
+		ps.setInt(13, progettoFormativo.getAnnullato());
+		ps.setString(14, progettoFormativo.getNomeFile());
 		
 		ps.executeUpdate();
 		ps.close();

@@ -7,14 +7,49 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import domainClasses.ProgettoFormativo;
-import domainClasses.ResponsabileAziendale;
 import domainClasses.Tirocinio;
 
 public class ResponsabileAziendaleDCS {
 
 	public ResponsabileAziendaleDCS(){}
 	
-	private static final String FIND_BY_EMAIL = "SELECT * FROM responsabile_aziendale WHERE email=?";
+private static final String GET_KEY_BY_EMAIL = "SELECT idResponsabileAziendale FROM responsabile_aziendale WHERE email=?";
+	
+	public static String getKeyByEmail(String email) throws ClassNotFoundException, SQLException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		con = ConnectionManager.getConnection();
+		ps = con.prepareStatement(GET_KEY_BY_EMAIL);
+		ps.setString(1, email);
+		rs = ps.executeQuery();
+		
+		
+		if(rs.next()){
+			String idResponsabileAziendale = Integer.toString(rs.getInt("idResponsabileAziendale")); //PK
+			System.out.println("ResponsabileAziendale trovato.");
+			
+			rs.close();
+			ps.close();
+			con.close();
+			
+			return idResponsabileAziendale;
+		}
+		else{
+			
+			System.out.println("ResponsabileAziendale non presente nel database.");
+			rs.close();
+			ps.close();
+			con.close();
+		
+			return null;
+		}
+	}
+	
+	/*
+	 * private static final String FIND_BY_EMAIL = "SELECT * FROM responsabile_aziendale WHERE email=?";
 	
 	public static ResponsabileAziendale loadByEmail(String email) throws ClassNotFoundException, SQLException{
 		
@@ -53,7 +88,7 @@ public class ResponsabileAziendaleDCS {
 		
 			return null;
 		}
-	}
+	}*/
 	
 private static final String CARICA_TIROCINI_RA= "SELECT * FROM tirocinio WHERE idResponsabileAziendale=?";
 	public static ArrayList<Tirocinio> caricaTirocini(int idResponsabileAziendale) throws ClassNotFoundException, SQLException{

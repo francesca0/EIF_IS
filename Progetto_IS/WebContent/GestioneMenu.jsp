@@ -1,8 +1,13 @@
 <% int tipoAccount =0;
+String key =null;
  if(!(session.getAttribute("tipoAccount")==null)){
   tipoAccount = (int) session.getAttribute("tipoAccount"); 
  }
- if(tipoAccount==0){
+ if(!(session.getAttribute("key")==null)){
+	  key = (String) session.getAttribute("key");
+ }
+ 
+ if(tipoAccount==0 || key==null){
  System.out.println("Utente non loggato . Redirect a Login.");%>
   <jsp:forward page="login.jsp"/>
   <%
@@ -170,8 +175,9 @@
 			</form>
 		</li>
 		<li>
-			<form method="get" action="http://www.unisa.it/uploads/14078/progetto_formativo_tirocinio_curriculare.pdf">
+			<form method="get" action="DownloadProgettoFormativoServlet">
 				<button type="submit" class="list-group-item">Download Progetto Formativo</button>
+				<input type="hidden" value="0512100000" id="matricolaFile" name="matricolaFile"/>
 			</form>
 		</li>
 		<li>
@@ -200,9 +206,10 @@
 		<form action="homePage.jsp">
 			<button type="submit" class="list-group-item" >Home</button>
 		</form>
-        <form method="get" action="http://www.unisa.it/uploads/14078/progetto_formativo_tirocinio_curriculare.pdf">
+        <form method="get" action="DownloadProgettoFormativoServlet">
 				<button type="submit" class="list-group-item">Download Progetto Formativo</button>
-		</form>
+				<input type="hidden" value="0512100000" id="matricolaFile" name="matricolaFile"/>
+			</form>
         <form name="visioneProgettiFormativiForm" action="VisioneProgettiFormativiServlet">
         	<button type="submit" class="list-group-item">Visiona Progetti Formativi</button>
         </form>

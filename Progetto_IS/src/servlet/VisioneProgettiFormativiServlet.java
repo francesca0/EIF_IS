@@ -20,10 +20,6 @@ import dcs.TutorAccademicoDCS;
 import dcs.TutorAziendaleDCS;
 import dcs.UfficioDCS;
 import domainClasses.ProgettoFormativo;
-import domainClasses.ResponsabileAziendale;
-import domainClasses.Studente;
-import domainClasses.TutorAccademico;
-import domainClasses.TutorAziendale;
 
 @WebServlet("/VisioneProgettiFormativiServlet")
 public class VisioneProgettiFormativiServlet extends HttpServlet {
@@ -31,7 +27,7 @@ public class VisioneProgettiFormativiServlet extends HttpServlet {
 	
 	HttpSession session=null;
 	RequestDispatcher dispatcher = null;
-	String pagina = "";
+	String pagina = "ErrorPage.jsp";
 	
     public VisioneProgettiFormativiServlet() {
         super();
@@ -43,6 +39,7 @@ public class VisioneProgettiFormativiServlet extends HttpServlet {
     	pagina="homePage.jsp";
     	session = request.getSession(true);
     	int tipoAccount = (int) session.getAttribute("tipoAccount");
+    	String key = (String) session.getAttribute("key");
     	
     	if(tipoAccount == 1) {
 	    	try {
@@ -54,8 +51,7 @@ public class VisioneProgettiFormativiServlet extends HttpServlet {
     	}
     	else if(tipoAccount == 2) {
     		try {
-    			TutorAziendale tutorAziendale = (TutorAziendale) session.getAttribute("utente");
-    			int idTutorAziendale= tutorAziendale.getIdTutorAziendale();
+    			int idTutorAziendale= Integer.parseInt(key);
     			ArrayList<ProgettoFormativo> list = new ArrayList<ProgettoFormativo>();
 				list = (ArrayList<ProgettoFormativo>)  TutorAziendaleDCS.caricaProgettiFormativiFirmati(idTutorAziendale);
 	    		session.setAttribute("listaProgettiFormativiCompletati",list);
@@ -67,8 +63,7 @@ public class VisioneProgettiFormativiServlet extends HttpServlet {
     	}
     	else if(tipoAccount == 3) {
     		try {
-    			TutorAccademico tutorAccademico = (TutorAccademico) session.getAttribute("utente");
-    			String matricolaTutorAccademico= tutorAccademico.getMatricolaTutorAccademico();
+    			String matricolaTutorAccademico= key;
 	    		session.setAttribute("listaProgettiFormativiCompletati", TutorAccademicoDCS.caricaProgettiFormativiFirmati(matricolaTutorAccademico));
 	    		pagina="visioneProgettoFormativo.jsp";
     		} catch (ClassNotFoundException | SQLException e) {
@@ -77,8 +72,7 @@ public class VisioneProgettiFormativiServlet extends HttpServlet {
     	}
     	else if(tipoAccount == 4) {
     		try {
-    		Studente studente = (Studente) session.getAttribute("utente");
-    		String matricolaStudente= studente.getMatricolaStudente();
+    		String matricolaStudente=  key;
     		session.setAttribute("progettoFormativoStudente",StudenteDCS.caricaProgettoFormativo(matricolaStudente));
     		pagina="visioneProgettoFormativo.jsp";
 			} catch (ClassNotFoundException | SQLException e) {
@@ -88,8 +82,7 @@ public class VisioneProgettiFormativiServlet extends HttpServlet {
     	}
     	else if(tipoAccount == 5) {
     		try {
-    			ResponsabileAziendale responsabileAziendale = (ResponsabileAziendale) session.getAttribute("utente");
-    			int idResponsabileAziendale= responsabileAziendale.getIdResponsabileAziendale();
+    			int idResponsabileAziendale= Integer.parseInt(key);
 	    		session.setAttribute("listaProgettiFormativiCompletati", ResponsabileAziendaleDCS.caricaProgettiFormativiApprovati(idResponsabileAziendale));
 	    		pagina="visioneProgettoFormativo.jsp";
 			} catch (ClassNotFoundException | SQLException e) {
@@ -113,8 +106,8 @@ public class VisioneProgettiFormativiServlet extends HttpServlet {
 			}
     	}
     	else {
-    		System.out.println("Errore Sconosciuto in VisioneProgettiFormativiServlet!");
-			session.setAttribute("messaggioErrore", "Errore Sconosciuto in VisioneProgettiFormativiServlet!");
+    		System.out.println("Utente non loggato tenta di accedere in VisioneProgettiFormativiServlet!");
+			session.setAttribute("messaggioErrore", "ACCESSO NEGATO");
     		pagina="ErrorPage.jsp";
     	}
     	

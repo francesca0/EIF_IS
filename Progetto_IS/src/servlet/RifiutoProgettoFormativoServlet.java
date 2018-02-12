@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dcs.ResponsabileAziendaleDCS;
-import domainClasses.ResponsabileAziendale;
 
 @WebServlet("/RifiutoProgettoFormativoServlet")
 public class RifiutoProgettoFormativoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 HttpSession session = null;   
+	
+	HttpSession session = null;   
+	String pagina="ErrorPage.jsp";
 	 
 	    public RifiutoProgettoFormativoServlet() {
 	        super();
@@ -26,15 +27,13 @@ public class RifiutoProgettoFormativoServlet extends HttpServlet {
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 			session = request.getSession(true);
-			String pagina="homePage.jsp";
-
 			//controllo se l'utente è loggato
 			int tipoAccount = (int) session.getAttribute("tipoAccount");
-			if(tipoAccount == 5){
+			String key = (String) session.getAttribute("key");
 			
-				ResponsabileAziendale responsabileAziendale = (ResponsabileAziendale) session.getAttribute("utente");
-				
-				int idResponsabileAziendale= responsabileAziendale.getIdResponsabileAziendale();
+			if(tipoAccount == 5){
+
+				int idResponsabileAziendale= Integer.parseInt(key);
 				int idProgettoFormativo = Integer.parseInt(request.getParameter("idProgettoFormativoRifiuto"));
 				
 				try {
@@ -50,7 +49,6 @@ public class RifiutoProgettoFormativoServlet extends HttpServlet {
 			else{//se l'utente non è loggato come responsabile aziendale
 				System.out.println("Non sei loggato come responsabile aziendale!");
 				session.setAttribute("messaggioErrore", "Non sei loggato come responsabile aziendale!");
-				pagina = "ErrorPage.jsp";
 			}
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(pagina);

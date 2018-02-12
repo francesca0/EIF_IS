@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dcs.ResponsabileAziendaleDCS;
-import domainClasses.ResponsabileAziendale;
 
 @WebServlet("/ApprovazioneProgettoFormativoServlet")
 public class ApprovazioneProgettoFormativoServlet extends HttpServlet {
@@ -32,9 +31,9 @@ public class ApprovazioneProgettoFormativoServlet extends HttpServlet {
 		int tipoAccount = (int) session.getAttribute("tipoAccount");
 		if(tipoAccount == 5){
 			
-			ResponsabileAziendale responsabileAziendale = (ResponsabileAziendale) session.getAttribute("utente");
+			String key = (String) session.getAttribute("key");
+			int idResponsabileAziendale = Integer.parseInt(key);
 			
-			int idResponsabileAziendale= responsabileAziendale.getIdResponsabileAziendale();
 			int idProgettoFormativo = Integer.parseInt(request.getParameter("idProgettoFormativoApprovazione"));
 			
 			try {

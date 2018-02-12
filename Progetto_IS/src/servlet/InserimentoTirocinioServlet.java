@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dcs.TutorAziendaleDCS;
-import domainClasses.ResponsabileAziendale;
 import domainClasses.Tirocinio;
 import utility.ConvertDate;
 
@@ -29,15 +28,14 @@ public class InserimentoTirocinioServlet extends HttpServlet {
 	
 		
 		session = request.getSession(true);
-		String pagina="index.html";
+		String pagina="ErrorPage.jsp";
 
 		//controllo se l'utente è loggato
 		int tipoAccount = (int) session.getAttribute("tipoAccount");
 		if(tipoAccount == 5){
 			
-			
-			ResponsabileAziendale responsabileAziendale = (ResponsabileAziendale) session.getAttribute("utente");
-			int idResponsabileAziendale = responsabileAziendale.getIdResponsabileAziendale();
+			String key = (String) session.getAttribute("key");
+			int idResponsabileAziendale = Integer.parseInt(key);
 			
 			Tirocinio tirocinio = new Tirocinio();
 			tirocinio.setIdResponsabileAziendale(idResponsabileAziendale);
@@ -54,8 +52,6 @@ public class InserimentoTirocinioServlet extends HttpServlet {
 				else{
 					System.out.println("Il tutor aziendale inserito non esiste nel database!");
 					session.setAttribute("messaggioErrore", "L'Id del tutor aziendale inserito ["+idTutorAziendale+"] non esiste nel database!");
-					pagina = "ErrorPage.jsp";
-					tutorAziendaleExists=1;
 				}
 			} catch (ClassNotFoundException | SQLException e1) {
 				e1.printStackTrace();
@@ -81,7 +77,6 @@ public class InserimentoTirocinioServlet extends HttpServlet {
 					tirocinio.inserisciDatiSuDB();
 					System.out.println(tirocinio.toString());
 					session.setAttribute("flagInserimento", 1);
-					
 					pagina="inserimentoTirocinio.jsp";
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -91,7 +86,6 @@ public class InserimentoTirocinioServlet extends HttpServlet {
 		else{//se l'utente non è loggato come responsabile aziendale
 			System.out.println("Non sei loggato come responsabile aziendale!");
 			session.setAttribute("messaggioErrore", "Non sei loggato come responsabile aziendale!");
-			pagina = "ErrorPage.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(pagina);

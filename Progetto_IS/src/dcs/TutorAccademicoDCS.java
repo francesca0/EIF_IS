@@ -13,7 +13,40 @@ public class TutorAccademicoDCS {
 
 	TutorAccademicoDCS(){}
 	
-	private static final String FIND_BY_EMAIL = "SELECT * FROM tutor_accademico WHERE email=?";
+private static final String GET_KEY_BY_EMAIL = "SELECT matricolaTutorAccademico FROM tutor_accademico WHERE email=?";
+	
+	public static String getKeyByEmail(String email) throws ClassNotFoundException, SQLException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		con = ConnectionManager.getConnection();
+		ps = con.prepareStatement(GET_KEY_BY_EMAIL);
+		ps.setString(1, email);
+		rs = ps.executeQuery();
+		
+		
+		if(rs.next()){
+			String matricolaTutorAccademico = rs.getString("matricolaTutorAccademico"); //PK
+			
+			System.out.println("TutorAccademico trovato.");
+			rs.close();
+			ps.close();
+			con.close();
+			return matricolaTutorAccademico;
+		}
+			else{
+				System.out.println("TutorAccademico non presente nel database.");
+				rs.close();
+				ps.close();
+				con.close();
+			
+				return null;
+			}
+	}
+	
+	/*private static final String FIND_BY_EMAIL = "SELECT * FROM tutor_accademico WHERE email=?";
 	
 	public static TutorAccademico loadByEmail(String email) throws ClassNotFoundException, SQLException{
 		
@@ -51,7 +84,7 @@ public class TutorAccademicoDCS {
 				return null;
 			}
 	}
-	
+	*/
 	private static final String FIND_BY_MATRICOLA = "SELECT * FROM tutor_accademico WHERE matricolaTutorAccademico=?";
 	
 	public static TutorAccademico loadByMatricola(String matricolaTutorAccademico) throws ClassNotFoundException, SQLException{

@@ -6,14 +6,46 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import domainClasses.DirettoreDipartimento;
 import domainClasses.ProgettoFormativo;
 
 public class DirettoreDipartimentoDCS {
 
 	public DirettoreDipartimentoDCS(){}
 	
-	private static final String FIND_BY_EMAIL = "SELECT * FROM direttore_dipartimento WHERE email=?";
+private static final String GET_KEY_BY_EMAIL = "SELECT idDirettoreDipartimento FROM direttore_dipartimento WHERE email=?";
+	
+	public static String getKeyByEmail(String email) throws ClassNotFoundException, SQLException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		con = ConnectionManager.getConnection();
+		ps = con.prepareStatement(GET_KEY_BY_EMAIL);
+		ps.setString(1, email);
+		rs = ps.executeQuery();
+		
+		
+		if(rs.next()){
+		String idDirettoreDipartimento = rs.getString("idDirettoreDipartimento");
+		System.out.println("DirettoreDipartimento trovato.");
+		
+		rs.close();
+		ps.close();
+		con.close();
+		return idDirettoreDipartimento;
+		}
+		else{
+		System.out.println("DirettoreDipartimento non presente nel database.");
+		rs.close();
+		ps.close();
+		con.close();
+	
+		return null;
+		}
+	}
+	
+	/*private static final String FIND_BY_EMAIL = "SELECT * FROM direttore_dipartimento WHERE email=?";
 	
 	public static DirettoreDipartimento loadByEmail(String email) throws ClassNotFoundException, SQLException{
 		
@@ -51,7 +83,7 @@ public class DirettoreDipartimentoDCS {
 		return null;
 		}
 	}
-	
+	*/
 	
 	private static final String CARICA_PF_DD = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND firmaDd='0' AND confermaUst='0' AND annullato='0'";
 	public static ArrayList<ProgettoFormativo> caricaProgettiFormativi() throws ClassNotFoundException, SQLException{

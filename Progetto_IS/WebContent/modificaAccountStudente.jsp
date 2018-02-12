@@ -24,7 +24,7 @@
 		<div class="row">
 		<%	String matricolaStudente = request.getParameter("matricolaStudenteModifica"); %>
 			<h2 style="text-align:center;"> Modifica dello Studente con matricola[<%=matricolaStudente%>]</h2>
-             <form name="modificaAccountStudenteForm" action="ModificaAccountStudenteServlet" onsubmit="return confirm('Sicuro?');">
+             <form name="modificaAccountStudenteForm" action="ModificaAccountStudenteServlet" onsubmit="return confirm('Sicuro?'); " >
              			<div class="col-md-6 form-group" >
                         		<label for="matricolaStudente" class="control-label">Matricola Studente</label>
                         		<input type="text" class="form-control" id="matricolaStudente" name="matricolaStudente" placeholder="Inserisci..." >

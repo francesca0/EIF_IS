@@ -160,7 +160,12 @@
 					<td><%=progettoFormativo.getFirmaDd()%></td>
 					<td><%=progettoFormativo.getFirmaPcd()%></td>
 					  <%}%>
-					<td><%=progettoFormativo.getNomeFile()%></td>
+					<td>
+						<form method="get" action="DownloadProgettoFormativoServlet">
+		          			 <input type="submit" value="Scarica File" />
+		           			 <input type="hidden" value="<%=progettoFormativo.getMatricolaStudente()%>" id="matricolaFile" name="matricolaFile"/>
+		       			 </form>
+					</td>
 					
 					<%
 				if(progettoFormativo.getConfermaUst()==1){%>

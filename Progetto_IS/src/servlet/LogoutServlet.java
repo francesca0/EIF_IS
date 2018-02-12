@@ -23,14 +23,13 @@ public class LogoutServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = null;
 		session = request.getSession(true);
 		session.removeAttribute("tipoAccount");
-		session.removeAttribute("utente");
+		session.removeAttribute("key");
 		session.invalidate();
 		
 		//rimandiamo all'index
-		dispatcher = request.getRequestDispatcher("index.html");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
 		dispatcher.forward(request, response);
 	
 		

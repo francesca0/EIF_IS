@@ -109,7 +109,7 @@
 							</form>
 						</td>
 						<td>
-							<form name="eliminazioneTirocinioForm" action="EliminazioneTirocinioServlet" onsubmit="return confirm('Sicuro?');"> 
+							<form name="eliminazioneTirocinioForm" action="EliminazioneTirocinioServlet" onsubmit="return confirm('Sicuro?');" > 
 							<button type="submit" class="list-group-item">Elimina</button>
 							<input type="hidden" value="<%= tirocinio.getIdTirocinio()%>" id="idTirocinioEliminazione" name="idTirocinioEliminazione"/>
 							</form>

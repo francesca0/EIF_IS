@@ -6,13 +6,47 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import domainClasses.ProgettoFormativo;
-import domainClasses.Studente;
 
 public class StudenteDCS {
 
 	public StudenteDCS(){}
 	
-		private static final String FIND_BY_EMAIL = "SELECT * FROM studente WHERE email=?";
+		private static final String GET_KEY_BY_EMAIL = "SELECT matricolaStudente FROM studente WHERE email=?";
+		
+		public static String getKeyByEmail(String email) throws ClassNotFoundException, SQLException{
+			
+			Connection con = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			
+			con = ConnectionManager.getConnection();
+			ps = con.prepareStatement(GET_KEY_BY_EMAIL);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			
+			
+			if(rs.next()){
+			String matricolaStudente = rs.getString("matricolaStudente"); //PK
+			
+			System.out.println("Studente trovato.");
+			
+				rs.close();
+				ps.close();
+				con.close();
+				
+				return matricolaStudente;
+			}
+			else{
+				System.out.println("Studente non presente nel database.");
+				rs.close();
+				ps.close();
+				con.close();
+		
+				return null;
+			}
+		}
+	
+		/*private static final String FIND_BY_EMAIL = "SELECT * FROM studente WHERE email=?";
 		
 		public static Studente loadByEmail(String email) throws ClassNotFoundException, SQLException{
 			
@@ -51,7 +85,7 @@ public class StudenteDCS {
 		
 				return null;
 			}
-		}
+		}*/
 		
 		private static final String VISIONA_PF = "SELECT * FROM progetto_formativo WHERE matricolaStudente=?";
 		public static ProgettoFormativo caricaProgettoFormativo(String matricolaStudente) throws ClassNotFoundException, SQLException{

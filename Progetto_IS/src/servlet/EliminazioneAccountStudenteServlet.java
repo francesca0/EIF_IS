@@ -29,7 +29,9 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 
 		//controllo se l'utente è loggato
 		int tipoAccount = (int) session.getAttribute("tipoAccount");
-		if(tipoAccount == 1){
+		String key = (String) session.getAttribute("key");
+		
+		if((tipoAccount == 1) &&(key.equals("ufficio"))){
 			
 			String matricolaStudente = request.getParameter("matricolaStudenteEliminazione");
 			

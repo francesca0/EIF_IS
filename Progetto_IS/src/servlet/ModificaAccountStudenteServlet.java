@@ -31,7 +31,8 @@ public class ModificaAccountStudenteServlet extends HttpServlet {
 
 		//controllo se l'utente è loggato
 		int tipoAccount = (int) session.getAttribute("tipoAccount");
-		if(tipoAccount == 1){
+		String key = (String) session.getAttribute("key");
+		if((tipoAccount == 1) &&(key.equals("ufficio"))){
 			
 			Studente studente = new Studente();
 			studente.setMatricolaStudente(request.getParameter("matricolaStudenteModifica"));

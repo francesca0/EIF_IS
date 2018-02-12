@@ -6,14 +6,46 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import domainClasses.PresidenteConsiglioDidattico;
 import domainClasses.ProgettoFormativo;
 
 public class PresidenteConsiglioDidatticoDCS {
 
 	public PresidenteConsiglioDidatticoDCS(){}
 	
-		private static final String FIND_BY_EMAIL = "SELECT * FROM presidente_consiglio_didattico WHERE email=?";
+	private static final String GET_KEY_BY_EMAIL = "SELECT idPresidenteConsiglioDidattico FROM presidente_consiglio_didattico WHERE email=?";
+	public static String getKeyByEmail(String email) throws ClassNotFoundException, SQLException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		con = ConnectionManager.getConnection();
+		ps = con.prepareStatement(GET_KEY_BY_EMAIL);
+		ps.setString(1, email);
+		rs = ps.executeQuery();
+		
+		
+		if(rs.next()){
+			String idPresidenteConsiglioDidattico = rs.getString("idPresidenteConsiglioDidattico"); //PK
+			System.out.println("PresidenteConsiglioDidattico trovato.");
+			
+			rs.close();
+			ps.close();
+			con.close();
+			return idPresidenteConsiglioDidattico;
+		}
+		else{
+			System.out.println("PresidenteConsiglioDidattico non presente nel database.");
+			rs.close();
+			ps.close();
+			con.close();
+		
+			return null;
+		}
+		
+	}
+	
+		/*private static final String FIND_BY_EMAIL = "SELECT * FROM presidente_consiglio_didattico WHERE email=?";
 		public static PresidenteConsiglioDidattico loadByEmail(String email) throws ClassNotFoundException, SQLException{
 			
 			Connection con = null;
@@ -50,7 +82,7 @@ public class PresidenteConsiglioDidatticoDCS {
 				return null;
 			}
 			
-		}
+		}*/
 		
 		
 		private static final String CARICA_PF_PCD = "SELECT * FROM progetto_formativo WHERE approvazioneRa='1' AND firmaPcd='0' AND confermaUst='0' AND annullato='0'";

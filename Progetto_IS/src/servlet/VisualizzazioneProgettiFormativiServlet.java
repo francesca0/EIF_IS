@@ -17,9 +17,6 @@ import dcs.ResponsabileAziendaleDCS;
 import dcs.TutorAccademicoDCS;
 import dcs.TutorAziendaleDCS;
 import dcs.UfficioDCS;
-import domainClasses.ResponsabileAziendale;
-import domainClasses.TutorAccademico;
-import domainClasses.TutorAziendale;
 
 /**
  * Servlet implementation class VisualizzazioneProgettiFormativiUfficio
@@ -29,7 +26,7 @@ public class VisualizzazioneProgettiFormativiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HttpSession session=null;
 	RequestDispatcher dispatcher = null;
-	String pagina = "";
+	String pagina = "ErrorPage.jsp";
 	
     public VisualizzazioneProgettiFormativiServlet() {
         super();
@@ -38,11 +35,11 @@ public class VisualizzazioneProgettiFormativiServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    	pagina="homePage.jsp";
     	session = request.getSession(true);
     	int tipoAccount = (int) session.getAttribute("tipoAccount");
+    	String key = (String) session.getAttribute("key");
     	
-    	if(tipoAccount == 1) {
+    	if((tipoAccount == 1) &&(key.equals("ufficio"))){
 	    	try {
 	    		session.setAttribute("listaProgettiFormativiRicevuti", UfficioDCS.caricaProgettiFormativi());
 	    		pagina="visualizzazioneProgettoFormativo.jsp";
@@ -52,8 +49,7 @@ public class VisualizzazioneProgettiFormativiServlet extends HttpServlet {
     	}
     	else if(tipoAccount == 2) {
     		try {
-    			TutorAziendale tutorAziendale = (TutorAziendale) session.getAttribute("utente");
-    			int idTutorAziendale= tutorAziendale.getIdTutorAziendale();
+    			int idTutorAziendale= Integer.parseInt(key);
 	    		session.setAttribute("listaProgettiFormativiRicevuti", TutorAziendaleDCS.caricaProgettiFormativi(idTutorAziendale) );
 	    		pagina="visualizzazioneProgettoFormativo.jsp";
     		} catch (ClassNotFoundException | SQLException e) {
@@ -62,8 +58,7 @@ public class VisualizzazioneProgettiFormativiServlet extends HttpServlet {
     	}
     	else if(tipoAccount == 3) {
     		try {
-    			TutorAccademico tutorAccademico = (TutorAccademico) session.getAttribute("utente");
-    			String matricolaTutorAccademico= tutorAccademico.getMatricolaTutorAccademico();
+    			String matricolaTutorAccademico= key;
 	    		session.setAttribute("listaProgettiFormativiRicevuti", TutorAccademicoDCS.caricaProgettiFormativi(matricolaTutorAccademico));
 	    		pagina="visualizzazioneProgettoFormativo.jsp";
     		} catch (ClassNotFoundException | SQLException e) {
@@ -71,15 +66,12 @@ public class VisualizzazioneProgettiFormativiServlet extends HttpServlet {
 			}
     	}
     	else if(tipoAccount == 4) {
-    		
-    		System.out.println("Errore sconosciuto , lo studente non dovrebbe mai richiamare VisualizzazioneProgettiFormativiServlet");
-    		session.setAttribute("messaggioErrore", "Errore sconosciuto , lo studente non dovrebbe mai richiamare VisualizzazioneProgettiFormativiServlet");
-    		pagina="ErrorPage.jsp";
+    		System.out.println("Errore , lo studente non dovrebbe mai richiamare VisualizzazioneProgettiFormativiServlet");
+    		session.setAttribute("messaggioErrore", "ACCESSO NEGATO");
     	}
     	else if(tipoAccount == 5) {
     		try {
-    			ResponsabileAziendale responsabileAziendale = (ResponsabileAziendale) session.getAttribute("utente");
-    			int idResponsabileAziendale= responsabileAziendale.getIdResponsabileAziendale();
+    			int idResponsabileAziendale= Integer.parseInt(key);
 	    		session.setAttribute("listaProgettiFormativiRicevuti", ResponsabileAziendaleDCS.caricaProgettiFormativi(idResponsabileAziendale));
 	    		pagina="visualizzazioneProgettoFormativo.jsp";
     		} catch (ClassNotFoundException | SQLException e) {
@@ -103,9 +95,8 @@ public class VisualizzazioneProgettiFormativiServlet extends HttpServlet {
 			}
     	}
     	else {
-    		System.out.println("Errore Sconosciuto in VisualizzazioneProgettiFormativiServlet!");
-			session.setAttribute("messaggioErrore", "Errore Sconosciuto in VisualizzazioneProgettiFormativiServlet!");
-    		pagina="ErrorPage.jsp";
+    		System.out.println("Errore , un utente non loggato tenta di accedere a VisualizzazioneProgettiFormativiServlet!");
+			session.setAttribute("messaggioErrore", "ACCESSO NEGATO");
     	}
     	
     	dispatcher = request.getRequestDispatcher(pagina);

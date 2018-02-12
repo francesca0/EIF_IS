@@ -13,7 +13,39 @@ public class TutorAziendaleDCS {
 
 	TutorAziendaleDCS(){}
 	
-	private static final String FIND_BY_EMAIL = "SELECT * FROM tutor_aziendale WHERE email=?";
+	private static final String GET_KEY_BY_EMAIL = "SELECT * FROM tutor_aziendale WHERE email=?";
+	public static String getKeyByEmail(String email) throws ClassNotFoundException, SQLException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		con = ConnectionManager.getConnection();
+		ps = con.prepareStatement(GET_KEY_BY_EMAIL);
+		ps.setString(1, email);
+		rs = ps.executeQuery();
+		
+		
+		if(rs.next()){
+			String idTutorAziendale = Integer.toString(rs.getInt("idTutorAziendale")); //PK
+
+			System.out.println("TutorAziendale trovato.");
+			rs.close();
+			ps.close();
+			con.close();
+			return idTutorAziendale;
+		}
+		else{
+			System.out.println("TutorAziendale non presente nel database.");
+			rs.close();
+			ps.close();
+			con.close();
+		
+			return null;
+		}
+	}
+	
+	/*private static final String FIND_BY_EMAIL = "SELECT * FROM tutor_aziendale WHERE email=?";
 	public static TutorAziendale loadByEmail(String email) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
@@ -49,7 +81,7 @@ public class TutorAziendaleDCS {
 		
 			return null;
 		}
-	}
+	}*/
 	
 	private static final String FIND_BY_ID = "SELECT * FROM tutor_aziendale WHERE idTutorAziendale=?";
 	public static TutorAziendale loadById(int idTutorAziendale) throws ClassNotFoundException, SQLException{

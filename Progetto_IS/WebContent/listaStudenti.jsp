@@ -113,7 +113,7 @@
 							</form>
 						</td>
 						<td>
-							<form name="eliminazioneAccountStudenteForm" action="EliminazioneAccountStudenteServlet" onsubmit="return confirm('Sicuro?');">
+							<form name="eliminazioneAccountStudenteForm" action="EliminazioneAccountStudenteServlet"  onsubmit="return confirm('Sicuro?');">
 								<button type="submit" class="list-group-item" >Elimina</button>
 								<input type="hidden" value="<%=studente.getMatricolaStudente()%>" id="matricolaStudenteEliminazione" name="matricolaStudenteEliminazione"/>
 							</form>

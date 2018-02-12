@@ -4,22 +4,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Test File Upload</title>
+
+	<jsp:include page="datiCss.jsp" />
+	
+	
+    
 </head>
+<% String key = "0512103873"; //matricola di test %>
    <body>
-		 
-		<!-- form method="POST" enctype="multipart/form-data" action="fup.cgi"> -->
-		 	<!-- File to upload: <input type="file" name="upfile"><br/> -->
-			<!--  <br/>-->
-			<!--  <input type="submit" value="Press"> to upload the file!-->
-		<!--	</form> -->
-		 
-		 <center>
-		        <form method="post" action="FileUploadServlet" enctype="multipart/form-data">
-		            Select file to upload:
-		            <input type="file" name="uploadFile" />
-		            <br/><br/>
-		            <input type="submit" value="Upload" />
+			 <center>
+		        <form method="get" action="DownloadProgettoFormativoServlet">
+		            <input type="submit" value="ScaricaFile" />
+		            <input type="hidden" value="<%=key%>" id="matricolaFile" name="matricolaFile"/>
 		        </form>
 		    </center>
-   </body>
+		    
+	   </body>
 </html>

@@ -15,8 +15,6 @@ import dcs.DirettoreDipartimentoDCS;
 import dcs.PresidenteConsiglioDidatticoDCS;
 import dcs.TutorAccademicoDCS;
 import dcs.TutorAziendaleDCS;
-import domainClasses.TutorAccademico;
-import domainClasses.TutorAziendale;
 
 @WebServlet("/FirmaProgettoFormativoServlet")
 public class FirmaProgettoFormativoServlet extends HttpServlet {
@@ -32,12 +30,11 @@ public class FirmaProgettoFormativoServlet extends HttpServlet {
 		session = request.getSession(true);
 		String pagina="homePage.jsp";		
 		int tipoAccount = (int) session.getAttribute("tipoAccount");
+		String key = (String) session.getAttribute("key");
 		int idProgettoFormativo = Integer.parseInt(request.getParameter("idProgettoFormativoFirma"));
 		
 		if(tipoAccount == 2) {
-			TutorAziendale tutorAziendale = new TutorAziendale();
-			tutorAziendale = (TutorAziendale) session.getAttribute("utente");
-			int idTutorAziendale = tutorAziendale.getIdTutorAziendale();
+			int idTutorAziendale = Integer.parseInt(key);
 			try {
 				TutorAziendaleDCS.firmaPF(idProgettoFormativo, idTutorAziendale);
 				pagina="VisualizzazioneProgettiFormativiServlet"; //in questo caso richiamiamo la servlet
@@ -48,9 +45,8 @@ public class FirmaProgettoFormativoServlet extends HttpServlet {
 			}	
 		}
 		else if(tipoAccount == 3) {
-			TutorAccademico tutorAccademico = new TutorAccademico();
-			tutorAccademico = (TutorAccademico) session.getAttribute("utente");
-			String matricolaTutorAccademico = tutorAccademico.getMatricolaTutorAccademico();
+			
+			String matricolaTutorAccademico = key;
 			try {
 				TutorAccademicoDCS.firmaPF(idProgettoFormativo, matricolaTutorAccademico);
 				pagina="VisualizzazioneProgettiFormativiServlet"; //in questo caso richiamiamo la servlet
@@ -66,7 +62,7 @@ public class FirmaProgettoFormativoServlet extends HttpServlet {
 				pagina="VisualizzazioneProgettiFormativiServlet"; //in questo caso richiamiamo la servlet
 				session.setAttribute("flagFirma", 1);
 			} catch (ClassNotFoundException | SQLException e) {
-				System.out.println("Errore nella firma del ProgettoFormativo. idProgettoFormativo-> ["+idProgettoFormativo+" ]");
+				System.out.println("Errore nella firma del ProgettoFormativo. idProgettoFormativo-> ["+idProgettoFormativo+" ].");
 				e.printStackTrace();
 			}
 		}
@@ -81,7 +77,7 @@ public class FirmaProgettoFormativoServlet extends HttpServlet {
 			}
 		}	
 		else{//se l'utente non è loggato come un utente che applica firme
-			String utente = "";
+			String utente = "[Utente non Loggato]";
 			if(tipoAccount==1){utente="Ufficio";}
 			else if(tipoAccount==4){utente="Studente";}
 			else if(tipoAccount==5){utente="Responsabile Aziendale";}

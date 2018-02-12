@@ -30,7 +30,8 @@ public class ConfermaProgettoFormativoServlet extends HttpServlet {
 
 		//controllo se l'utente è loggato
 		int tipoAccount = (int) session.getAttribute("tipoAccount");
-		if(tipoAccount == 1){
+		String key = (String) session.getAttribute("key");
+		if((tipoAccount == 1) &&(key.equals("ufficio"))){
 			
 			int idProgettoFormativo = Integer.parseInt(request.getParameter("idProgettoFormativoConferma"));
 			

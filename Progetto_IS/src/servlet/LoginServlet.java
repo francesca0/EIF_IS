@@ -38,152 +38,210 @@ public class LoginServlet extends HttpServlet {
     	super();
     }
     					
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException /*aggiungere myexception */{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	//doGet(request, response);
 		
 		String emailForm = request.getParameter("email");					
 		String passwordForm = request.getParameter("password");
-		String pagina = "index.html";
+		String pagina = "ErrorPage.jsp";
 		session = request.getSession(true);	 //Istanzio la sessione
 		RequestDispatcher dispatcher = null;
 		int tipoAccount = 0;
-		Object obj = null;
+		String key = null;
 		
 			try {
-				obj = UfficioDCS.loadByEmail(emailForm);
+				key = UfficioDCS.getKeyByEmail(emailForm);
 			} catch (ClassNotFoundException | SQLException e) {
 				 
 				e.printStackTrace();
 			}
 			tipoAccount = 1;							//UFFICIO 1
 		
-		if(obj == null){
+		if(key == null){
 			try {
-				obj = TutorAziendaleDCS.loadByEmail(emailForm);
+				key = TutorAziendaleDCS.getKeyByEmail(emailForm);
 			} catch (ClassNotFoundException | SQLException e) {
 				 
 				e.printStackTrace();
 			}
 			tipoAccount = tipoAccount + 1;				//TUTOR AZIENDALE 2
 		}
-		if(obj == null){
+		if(key == null){
 			try {
-				obj = TutorAccademicoDCS.loadByEmail(emailForm);
+				key = TutorAccademicoDCS.getKeyByEmail(emailForm);
 			} catch (ClassNotFoundException | SQLException e) {
 				 
 				e.printStackTrace();
 			}
 			tipoAccount = tipoAccount + 1;				//TUTOR ACCADEMICO 3
 		}
-		if(obj == null){
+		if(key == null){
 			try {
-				obj = StudenteDCS.loadByEmail(emailForm);
+				key = StudenteDCS.getKeyByEmail(emailForm);
 			} catch (ClassNotFoundException | SQLException e) {
 				 
 				e.printStackTrace();
 			}
 			tipoAccount = tipoAccount + 1;				//STUDENTE 4
 		}
-		if(obj == null){
+		if(key == null){
 			try {
-				obj = ResponsabileAziendaleDCS.loadByEmail(emailForm);
+				key = ResponsabileAziendaleDCS.getKeyByEmail(emailForm);
 			} catch (ClassNotFoundException | SQLException e) {
 				 
 				e.printStackTrace();
 			}
 			tipoAccount = tipoAccount + 1;				//RESPONSABILE AZIENDALE 5
 		}
-		if(obj == null){
+		if(key == null){
 			try {
-				obj = PresidenteConsiglioDidatticoDCS.loadByEmail(emailForm);
+				key = PresidenteConsiglioDidatticoDCS.getKeyByEmail(emailForm);
 			} catch (ClassNotFoundException | SQLException e) {
 				 
 				e.printStackTrace();
 			}
 			tipoAccount = tipoAccount + 1;				//PRESIDENTE CONSIGLIO 6
 		}
-		if(obj == null){
+		if(key == null){
 			try {
-				obj = DirettoreDipartimentoDCS.loadByEmail(emailForm);
+				key = DirettoreDipartimentoDCS.getKeyByEmail(emailForm);
 			} catch (ClassNotFoundException | SQLException e) {
 				 
 				e.printStackTrace();
 			}
 			tipoAccount = tipoAccount + 1;				//DIRETTORE DIPARTIMENTO 7
 		}
-		if(obj == null){
-			System.out.println("La mail inserita non è collegata a nessun account!");
-		}
-
-
-		int userLogged =0;
+			
+		//se va oltre tipoaccount diventa 8 e viene notato dallo switch
 		 
 		switch(tipoAccount){
 			case 1:{
-				Ufficio utente = (Ufficio) obj;
-				if(utente.getPassword().equals(passwordForm)){
-					userLogged=1;
-					session.setAttribute("utente", utente);
+				Ufficio ufficio = new Ufficio();
+				ufficio.setIdUfficio(key);
+				try {
+					ufficio.leggiDatiDaDB();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(ufficio.getPassword().equals(passwordForm)){
+					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+				}
+				else{
+					System.out.println("La password inserita è errata!");
+					session.setAttribute("messaggioErrore", "La password inserita è errata!");
 				}
 				break;
 			}	
 			case 2:{
-				TutorAziendale utente = (TutorAziendale) obj;
-				if(utente.getPassword().equals(passwordForm)){
-					userLogged=1;
-					session.setAttribute("utente", utente);
+				TutorAziendale tutorAziendale = new TutorAziendale();
+				tutorAziendale.setIdTutorAziendale(Integer.parseInt(key));
+				try {
+					tutorAziendale.leggiDatiDaDB();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(tutorAziendale.getPassword().equals(passwordForm)){
+					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+				}
+				else{
+					System.out.println("La password inserita è errata!");
+					session.setAttribute("messaggioErrore", "La password inserita è errata!");
 				}
 				break;
 			}	
 			case 3:{
-				TutorAccademico utente = (TutorAccademico) obj;
-				if(utente.getPassword().equals(passwordForm)){
-					userLogged=1;
-					session.setAttribute("utente", utente);
+				TutorAccademico tutorAccademico = new TutorAccademico();
+				tutorAccademico.setMatricolaTutorAccademico(key);
+				try {
+					tutorAccademico.leggiDatiDaDB();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(tutorAccademico.getPassword().equals(passwordForm)){
+					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+				}
+				else{
+					System.out.println("La password inserita è errata!");
+					session.setAttribute("messaggioErrore", "La password inserita è errata!");
 				}
 				break;
 			}	
 			case 4:{
-				Studente utente = (Studente) obj;
-				if(utente.getPassword().equals(passwordForm)){
-					userLogged=1;
-					session.setAttribute("utente", utente);
+				Studente studente = new Studente();
+				studente.setMatricolaStudente(key);
+				try {
+					studente.leggiDatiDaDB();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(studente.getPassword().equals(passwordForm)){
+					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+				}
+				else{
+					System.out.println("La password inserita è errata!");
+					session.setAttribute("messaggioErrore", "La password inserita è errata!");
 				}
 				break;
 			}	
 			case 5:{
-				ResponsabileAziendale utente = (ResponsabileAziendale) obj;
-				if(utente.getPassword().equals(passwordForm)){
-					userLogged=1;
-					session.setAttribute("utente", utente);
+				ResponsabileAziendale responsabileAziendale = new ResponsabileAziendale();
+				responsabileAziendale.setIdResponsabileAziendale(Integer.parseInt(key));
+				try {
+					responsabileAziendale.leggiDatiDaDB();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(responsabileAziendale.getPassword().equals(passwordForm)){
+					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+				}
+				else{
+					System.out.println("La password inserita è errata!");
+					session.setAttribute("messaggioErrore", "La password inserita è errata!");
 				}
 				break;
 			}	
 			case 6:{
-				PresidenteConsiglioDidattico utente = (PresidenteConsiglioDidattico) obj;
-				if(utente.getPassword().equals(passwordForm)){
-					userLogged=1;
-					session.setAttribute("utente", utente);
+				PresidenteConsiglioDidattico presidenteConsiglioDidattico = new PresidenteConsiglioDidattico();
+				presidenteConsiglioDidattico.setIdPresidenteConsiglioDidattico(key);
+				try {
+					presidenteConsiglioDidattico.leggiDatiDaDB();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(presidenteConsiglioDidattico.getPassword().equals(passwordForm)){
+					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+				}
+				else{
+					System.out.println("La password inserita è errata!");
+					session.setAttribute("messaggioErrore", "La password inserita è errata!");
 				}
 				break;
 			}
 			
 			case 7:{
-				DirettoreDipartimento utente = (DirettoreDipartimento) obj;
-				if(utente.getPassword().equals(passwordForm)){
-					userLogged=1;
-					session.setAttribute("utente", utente);
+				DirettoreDipartimento direttoreDipartimento = new DirettoreDipartimento();
+				direttoreDipartimento.setIdDirettoreDipartimento(key);
+				try {
+					direttoreDipartimento.leggiDatiDaDB();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(direttoreDipartimento.getPassword().equals(passwordForm)){
+					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+				}
+				else{
+					System.out.println("La password inserita è errata!");
+					session.setAttribute("messaggioErrore", "La password inserita è errata!");
 				}
 				break;
 			}	
@@ -191,21 +249,13 @@ public class LoginServlet extends HttpServlet {
 			case 8:{ 
 					System.out.println("La mail inserita non è collegata a nessun account!");
 					session.setAttribute("messaggioErrore", "L'account non è registrato!");
-					pagina = "ErrorPage.jsp";
-					userLogged=2;
 				}
 				break;
 		}
 		
-		if(userLogged == 1){
+		if(tipoAccount>0 && tipoAccount<8){
 			System.out.println("Password Corretta");
-			session.setAttribute("logged", true);
-			pagina = "homePage.jsp"; /////////////////////////////////////////////////////////////////////////////////////////////////////
-		}
-		else if (userLogged == 0){
-			System.out.println("La password inserita è errata!");
-			session.setAttribute("messaggioErrore", "La password inserita è errata!");
-			pagina="ErrorPage.jsp";
+			pagina = "homePage.jsp";
 		}
 										
 		dispatcher = request.getRequestDispatcher(pagina);
