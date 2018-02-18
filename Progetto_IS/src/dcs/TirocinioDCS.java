@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import domainClasses.Tirocinio;
+import utility.ConnectionManager;
 
 public class TirocinioDCS {
 

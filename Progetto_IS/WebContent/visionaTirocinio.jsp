@@ -93,7 +93,7 @@
           <form method="post" action="InvioProgettoFormativoServlet" enctype="multipart/form-data">
             <div class="form-inline">
               <div class="form-group">
-                <input type="file" name="uploadFile" />
+                <input type="file" name="uploadFile" required/>
               </div>
               <input type="submit" class="btn btn-sm btn-primary" value="Invia Progetto Formativo" />
               <!-- input type="hidden" value="<%//=idTirocinio%>" id="idTirocinioScelto" name="idTirocinioScelto"/ -->

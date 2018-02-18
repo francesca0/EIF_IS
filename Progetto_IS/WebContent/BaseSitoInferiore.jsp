@@ -10,12 +10,19 @@
 
 
 
-    <footer class="footer">
-      <div class="container" style="color:#fff;">
-        <p class="text-muted">Place sticky footer content here.</p>
+     <footer class="footer">
+      <div class="container row" style=" padding-top: 20px;">
+     	 <div class="col-xs-1">
+     	 </div>
+      	<div class="col-xs-1">
+	      	<a href="http://corsi.unisa.it/informatica/attivita-e-servizi/tirocini" style="color:white;">Info</a>
+	    </div>
+	    <div class="col-xs-1">
+	        <a href="faq.jsp" style="color:white;">FAQ</a>
+	    </div>
       </div>
     </footer>
-
+    
 <!--  base2 -->
   
     <!-- Bootstrap core JavaScript

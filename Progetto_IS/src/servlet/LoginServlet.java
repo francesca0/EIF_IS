@@ -51,6 +51,7 @@ public class LoginServlet extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		int tipoAccount = 0;
 		String key = null;
+		int passwordCorretta = 0;
 		
 			try {
 				key = UfficioDCS.getKeyByEmail(emailForm);
@@ -129,6 +130,7 @@ public class LoginServlet extends HttpServlet {
 				if(ufficio.getPassword().equals(passwordForm)){
 					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+					passwordCorretta = 1;
 				}
 				else{
 					System.out.println("La password inserita è errata!");
@@ -147,6 +149,7 @@ public class LoginServlet extends HttpServlet {
 				if(tutorAziendale.getPassword().equals(passwordForm)){
 					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+					passwordCorretta = 1;
 				}
 				else{
 					System.out.println("La password inserita è errata!");
@@ -165,6 +168,7 @@ public class LoginServlet extends HttpServlet {
 				if(tutorAccademico.getPassword().equals(passwordForm)){
 					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+					passwordCorretta = 1;
 				}
 				else{
 					System.out.println("La password inserita è errata!");
@@ -183,6 +187,7 @@ public class LoginServlet extends HttpServlet {
 				if(studente.getPassword().equals(passwordForm)){
 					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+					passwordCorretta = 1;
 				}
 				else{
 					System.out.println("La password inserita è errata!");
@@ -201,6 +206,7 @@ public class LoginServlet extends HttpServlet {
 				if(responsabileAziendale.getPassword().equals(passwordForm)){
 					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+					passwordCorretta = 1;
 				}
 				else{
 					System.out.println("La password inserita è errata!");
@@ -219,6 +225,7 @@ public class LoginServlet extends HttpServlet {
 				if(presidenteConsiglioDidattico.getPassword().equals(passwordForm)){
 					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+					passwordCorretta = 1;
 				}
 				else{
 					System.out.println("La password inserita è errata!");
@@ -238,6 +245,7 @@ public class LoginServlet extends HttpServlet {
 				if(direttoreDipartimento.getPassword().equals(passwordForm)){
 					session.setAttribute("key", key);
 					session.setAttribute("tipoAccount", tipoAccount);
+					passwordCorretta = 1;
 				}
 				else{
 					System.out.println("La password inserita è errata!");
@@ -253,7 +261,7 @@ public class LoginServlet extends HttpServlet {
 				break;
 		}
 		
-		if(tipoAccount>0 && tipoAccount<8){
+		if((tipoAccount>0 && tipoAccount<8)&&(passwordCorretta == 1)){
 			System.out.println("Password Corretta");
 			pagina = "homePage.jsp";
 		}

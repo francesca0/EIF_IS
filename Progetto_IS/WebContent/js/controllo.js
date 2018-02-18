@@ -53,6 +53,32 @@ function checkDatiRegistrazione(){
 	}
 }
 
+
+function checkDatiModifica(){
+
+	event.preventDefault();
+
+	var matricolaStudente = document.getElementById("matricolaStudente").value;
+	var email = document.getElementById("email").value;
+	
+	var emailFilter = /^([a-zA-Z0-9_.-])+@studenti.unisa.it+$/;
+	var matricolaFilter = /^051210+([0-9]{4})+$/;
+
+	if (!emailFilter.test(email)) {
+		alert('Inserisci una email universitaria!');
+		return;
+	}
+	else if (!matricolaFilter.test(matricolaStudente)) {
+		alert('Inserisci una matricola del dipartimento di informatica!');
+		return;
+	}
+	else{
+		
+		registrazioneForm.submit();
+	}
+}
+
+
 function checkRicerca(){
 
 	event.preventDefault();

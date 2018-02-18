@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import domainClasses.ProgettoFormativo;
+import utility.ConnectionManager;
 
 public class ProgettoFormativoDCS {
 

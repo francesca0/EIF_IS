@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dcs.ConnectionManager;
 import domainClasses.ResponsabileAziendale;
+import utility.ConnectionManager;
 
 public class ResponsabileAziendaleDAO {
 

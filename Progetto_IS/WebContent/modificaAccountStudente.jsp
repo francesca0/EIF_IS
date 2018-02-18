@@ -22,8 +22,8 @@
 			<!-- <DATI NEL PANEL> -->
 		    <!-- <DATI NEL PANEL> -->
 		<div class="row">
-		<%	String matricolaStudente = request.getParameter("matricolaStudenteModifica"); %>
-			<h2 style="text-align:center;"> Modifica dello Studente con matricola[<%=matricolaStudente%>]</h2>
+		<%	String matricolaStudenteOriginale = request.getParameter("matricolaStudenteModifica"); %>
+			<h2 style="text-align:center;"> Modifica dello Studente con matricola[<%=matricolaStudenteOriginale%>]</h2>
              <form name="modificaAccountStudenteForm" action="ModificaAccountStudenteServlet" onsubmit="return confirm('Sicuro?'); " >
              			<div class="col-md-6 form-group" >
                         		<label for="matricolaStudente" class="control-label">Matricola Studente</label>
@@ -79,7 +79,7 @@
              			
         			 	 <div class="col-md-4 col-md-offset-4 form-group" style="text-align:center">
          	 				<input type="submit" value="Modifica Account Studente" class="btn btn-default" > 
-         	 				<input type="hidden" value="<%=matricolaStudente%>" id="matricolaStudenteModifica" name="matricolaStudenteModifica"/>
+         	 				<input type="hidden" value="<%=matricolaStudenteOriginale%>" id="matricolaStudenteOriginale" name="matricolaStudenteOriginale"/>
   						</div>
 		 	</form>
 		 </div>

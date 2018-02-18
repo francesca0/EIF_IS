@@ -187,7 +187,7 @@ String key =null;
 		</li>
 		<li>
 			<form name="ricercaAziendeForm" action="ricercaAziende.jsp">
-				<button type="submit" class="list-group-item">Ricerca Azienda</button>
+				<button type="submit" class="list-group-item">Ricerca Aziende</button>
 			</form>
 		</li>
 		<li>
@@ -214,7 +214,7 @@ String key =null;
         	<button type="submit" class="list-group-item">Visiona Progetti Formativi</button>
         </form>
         <form name="ricercaAziendaForm" action="ricercaAziende.jsp">
-				<button type="submit" class="list-group-item">Ricerca Azienda</button>
+				<button type="submit" class="list-group-item">Ricerca Aziende</button>
 		</form>
 		<form name="ricercaTirociniForm" action="ricercaTirocini.jsp">
 				<button type="submit" class="list-group-item">Ricerca Tirocini</button>

@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dcs.ConnectionManager;
 import domainClasses.Tirocinio;
+import utility.ConnectionManager;
 
 public class TirocinioDAO {
 

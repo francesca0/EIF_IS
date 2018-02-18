@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import domainClasses.ProgettoFormativo;
+import utility.ConnectionManager;
 
 public class StudenteDCS {
 
@@ -131,6 +132,64 @@ public class StudenteDCS {
 				return null;
 			}
 			
+		}
+		
+		private static final String CHECK_EXISTENCE_EMAIL = "SELECT * FROM studente WHERE email=?";	
+		public static boolean emailExists(String email) throws ClassNotFoundException, SQLException{
+			
+			Connection con = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			
+			con = ConnectionManager.getConnection();
+			ps = con.prepareStatement(CHECK_EXISTENCE_EMAIL);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			
+			
+			if(rs.next()){
+				System.out.println("Email studente presente nel database.");
+				rs.close();
+				ps.close();
+				con.close();
+				return true;
+			}
+			else{
+					System.out.println("Email studente non presente nel database.");
+					rs.close();
+					ps.close();
+					con.close();
+					return false;
+			}
+		}
+		
+		private static final String CHECK_EXISTENCE_MATRICOLA = "SELECT * FROM studente WHERE matricolaStudente=?";	
+		public static boolean matricolaExists(String matricola) throws ClassNotFoundException, SQLException{
+			
+			Connection con = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			
+			con = ConnectionManager.getConnection();
+			ps = con.prepareStatement(CHECK_EXISTENCE_MATRICOLA);
+			ps.setString(1, matricola);
+			rs = ps.executeQuery();
+			
+			
+			if(rs.next()){
+				System.out.println("Matricola studente presente nel database.");
+				rs.close();
+				ps.close();
+				con.close();
+				return true;
+			}
+			else{
+					System.out.println("Matricola studente non presente nel database.");
+					rs.close();
+					ps.close();
+					con.close();
+					return false;
+			}
 		}
 		
 	

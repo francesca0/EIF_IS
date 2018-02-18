@@ -29,6 +29,7 @@ public class InserimentoTirocinioServlet extends HttpServlet {
 		
 		session = request.getSession(true);
 		String pagina="ErrorPage.jsp";
+		int dataInizioBeforeDataFine=0;
 
 		//controllo se l'utente è loggato
 		int tipoAccount = (int) session.getAttribute("tipoAccount");
@@ -69,10 +70,23 @@ public class InserimentoTirocinioServlet extends HttpServlet {
 				
 			tirocinio.setDataInizio(ConvertDate.convertStringToDate(request.getParameter("dataInizio")));
 			tirocinio.setDataFine(ConvertDate.convertStringToDate(request.getParameter("dataFine")));
+			
+			if(tirocinio.getDataInizio().before(tirocinio.getDataFine())){ //controlliamo che la data inizio venga prima di quella alla fine
+				dataInizioBeforeDataFine = 1;
+			}
+			
 			tirocinio.setTotaleOre(Integer.parseInt(request.getParameter("totaleOre")));
 			tirocinio.setNumeroMesi(Integer.parseInt(request.getParameter("numeroMesi")));
 			
-			if(tutorAziendaleExists==1){
+			if(tutorAziendaleExists!=1){
+				System.out.println("Il tutor aziendale inserito non esiste! [inserimento tirocinio]");
+				session.setAttribute("messaggioErrore", "Il tutor aziendale inserito non esiste !");
+			}
+			else if(dataInizioBeforeDataFine!=1){
+				System.out.println("La data di inizio viene dopo la data di fine! [inserimento tirocinio]");
+				session.setAttribute("messaggioErrore", "La data di inizio viene dopo la data di fine!");
+			}
+			else{
 				try {			
 					tirocinio.inserisciDatiSuDB();
 					System.out.println(tirocinio.toString());

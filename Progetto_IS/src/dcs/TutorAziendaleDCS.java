@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import domainClasses.ProgettoFormativo;
 import domainClasses.TutorAziendale;
+import utility.ConnectionManager;
 
 public class TutorAziendaleDCS {
 

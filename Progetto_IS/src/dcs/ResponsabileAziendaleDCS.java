@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import domainClasses.ProgettoFormativo;
 import domainClasses.Tirocinio;
+import utility.ConnectionManager;
 
 public class ResponsabileAziendaleDCS {
 

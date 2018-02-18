@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import domainClasses.ProgettoFormativo;
 import domainClasses.TutorAccademico;
+import utility.ConnectionManager;
 
 public class TutorAccademicoDCS {
 
 	TutorAccademicoDCS(){}
 	
-private static final String GET_KEY_BY_EMAIL = "SELECT matricolaTutorAccademico FROM tutor_accademico WHERE email=?";
-	
+	private static final String GET_KEY_BY_EMAIL = "SELECT matricolaTutorAccademico FROM tutor_accademico WHERE email=?";	
 	public static String getKeyByEmail(String email) throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
@@ -44,6 +44,35 @@ private static final String GET_KEY_BY_EMAIL = "SELECT matricolaTutorAccademico 
 			
 				return null;
 			}
+	}
+	
+	private static final String CHECK_EXISTENCE = "SELECT * FROM tutor_accademico WHERE matricolaTutorAccademico=?";	
+	public static boolean exists(String matricolaTutorAccademico) throws ClassNotFoundException, SQLException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		con = ConnectionManager.getConnection();
+		ps = con.prepareStatement(CHECK_EXISTENCE);
+		ps.setString(1, matricolaTutorAccademico);
+		rs = ps.executeQuery();
+		
+		
+		if(rs.next()){
+			System.out.println("TutorAccademico presente nel database.");
+			rs.close();
+			ps.close();
+			con.close();
+			return true;
+		}
+		else{
+				System.out.println("TutorAccademico non presente nel database.");
+				rs.close();
+				ps.close();
+				con.close();
+				return false;
+		}
 	}
 	
 	/*private static final String FIND_BY_EMAIL = "SELECT * FROM tutor_accademico WHERE email=?";

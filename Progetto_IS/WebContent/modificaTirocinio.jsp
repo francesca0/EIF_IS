@@ -58,12 +58,12 @@
              			
              			<div class="col-md-6 form-group">
                         		<label for="totaleOre" class="control-label">Totale Ore</label>
-                        		<input type="text" class="form-control" id="totaleOre" name="totaleOre" required>
+                        		<input type="text" class="form-control" id="totaleOre" name="totaleOre">
              			</div> 
              			
              			<div class="col-md-6 form-group">
                         		<label for="numeroMesi" class="control-label">Numero Mesi</label>
-                        		<input type="text" class="form-control" id="numeroMesi" name="numeroMesi" required>
+                        		<input type="text" class="form-control" id="numeroMesi" name="numeroMesi">
              			</div> 
              			
          	 

@@ -30,5 +30,14 @@ public class ConvertDate {
 			String data = df.format(dataDaConvertire);  
 			return data;
 	}
+	
+	public static boolean checkValidDate(String input){
+		if (input.matches("([0-9]{4})-([0-9]{2})-([0-9]{2})")){
+		    return true;
+		}
+		else{
+		   return false;
+		}
+	}
 		
 }

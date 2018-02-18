@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import domainClasses.Azienda;
+import utility.ConnectionManager;
 
 public class AziendaDCS {
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import domainClasses.ProgettoFormativo;
 import domainClasses.Studente;
+import utility.ConnectionManager;
 
 public class UfficioDCS {
 

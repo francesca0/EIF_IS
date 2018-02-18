@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dcs.TutorAccademicoDCS;
 import domainClasses.Studente;
 import utility.ConvertDate;
 
@@ -18,6 +20,7 @@ import utility.ConvertDate;
 public class ModificaAccountStudenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HttpSession session = null;
+	String pagina="ErrorPage.jsp";
        
     public ModificaAccountStudenteServlet() {
         super();
@@ -27,15 +30,19 @@ public class ModificaAccountStudenteServlet extends HttpServlet {
 
 
 		session = request.getSession(true);
-		String pagina="homePage.jsp";
 
 		//controllo se l'utente è loggato
+		boolean dateFormatIsCorrect = true;
 		int tipoAccount = (int) session.getAttribute("tipoAccount");
 		String key = (String) session.getAttribute("key");
 		if((tipoAccount == 1) &&(key.equals("ufficio"))){
 			
+			String matricolaStudenteModifica = request.getParameter("matricolaStudente");
+			String matricolaStudenteOriginale = request.getParameter("matricolaStudenteOriginale");
+			
 			Studente studente = new Studente();
-			studente.setMatricolaStudente(request.getParameter("matricolaStudenteModifica"));
+			studente.setMatricolaStudente(matricolaStudenteOriginale);
+			
 			try {
 				studente.leggiDatiDaDB();
 			} catch (Exception e1) {
@@ -49,51 +56,93 @@ public class ModificaAccountStudenteServlet extends HttpServlet {
 			String residenza = request.getParameter("residenza");
 			String telefono = request.getParameter("telefono");
 			String matricolaTutorAccademico = request.getParameter("matricolaTutorAccademico");
+			boolean tutorAziendaleExists=false;
+			
+			if(matricolaTutorAccademico.equals("")){ //nel caso non inserisca nulla
+				tutorAziendaleExists = true;
+			}
+			else{ //nel caso inserisca controlliamo
+				try {
+					tutorAziendaleExists = TutorAccademicoDCS.exists(matricolaTutorAccademico);
+				} catch (ClassNotFoundException | SQLException e1) {
+					e1.printStackTrace();
+				} 
+			}
+			
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			
-			if(!nome.equals("")){
-				studente.setNome(nome);
+			if(tutorAziendaleExists){
+				if(!nome.equals("")){
+					studente.setNome(nome);
+				}
+				if(!cognome.equals("")){
+					studente.setCognome(cognome);
+				}
+		
+				if(!(request.getParameter("dataDiNascita")).equals("")){
+					if(ConvertDate.checkValidDate(request.getParameter("dataDiNascita"))){
+						Date dataDiNascita = ConvertDate.convertStringToDate(request.getParameter("dataDiNascita"));
+						studente.setDataDiNascita(dataDiNascita);
+					}
+					else{
+						dateFormatIsCorrect = false;
+						System.out.println("La data inserita non è corretta!");
+						session.setAttribute("messaggioErrore", "La data inserita non è corretta!");
+					}
+					
+				}
+				
+				if(!luogoDiNascita.equals("")){
+					studente.setLuogoDiNascita(luogoDiNascita);
+				}
+				if(!residenza.equals("")){
+					studente.setResidenza(residenza);
+				}
+				if(!telefono.equals("")){
+					studente.setTelefono(telefono);
+				}
+				
+				if(!matricolaTutorAccademico.equals("")){
+					studente.setMatricolaTutorAccademico(matricolaTutorAccademico);
+				}
+				
+				if(!email.equals("")){
+					studente.setEmail(email);
+				}
+				if(!password.equals("")){
+					studente.setPassword(password);
+				}
+				
+				if(dateFormatIsCorrect){
+					try {
+						if(!matricolaStudenteModifica.equals("")){ // se inserisco una matricola studente da modificare inserisce , setta e poi cancella la vecchia
+							studente.setMatricolaStudente(matricolaStudenteModifica);
+							studente.inserisciDatiSuDB();
+							studente.setMatricolaStudente(matricolaStudenteOriginale);
+							studente.cancellaDatiDaDB();
+						}
+						else{
+							studente.aggiornaDatiSuDB();
+						}
+						
+						
+						session.setAttribute("flagModificaStudente", 1 );
+						pagina="VisualizzazioneAccountStudentiServlet"; //in questo caso rimandiamo alla servlet
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
-			if(!cognome.equals("")){
-				studente.setCognome(cognome);
-			}
-	
-			if(!(request.getParameter("dataDiNascita")).equals("")){
-				Date dataDiNascita = ConvertDate.convertStringToDate(request.getParameter("dataDiNascita"));
-				studente.setDataDiNascita(dataDiNascita);
-			}
-			if(!luogoDiNascita.equals("")){
-				studente.setLuogoDiNascita(luogoDiNascita);
-			}
-			if(!residenza.equals("")){
-				studente.setResidenza(residenza);
-			}
-			if(!telefono.equals("")){
-				studente.setTelefono(telefono);
-			}
-			if(!matricolaTutorAccademico.equals("")){
-				studente.setMatricolaTutorAccademico(matricolaTutorAccademico);
-			}
-			if(!email.equals("")){
-				studente.setEmail(email);
-			}
-			if(!password.equals("")){
-				studente.setPassword(password);
-			}
-			
-			try {
-				studente.aggiornaDatiSuDB();
-				session.setAttribute("flagModificaStudente", 1 );
-				pagina="VisualizzazioneAccountStudentiServlet"; //in questo caso rimandiamo alla servlet
-			} catch (Exception e) {
-				e.printStackTrace();
+			else{
+				//se il tutor accademico non esiste
+				System.out.println("Il tutor accademico inserito non è presente nel database!");
+				session.setAttribute("messaggioErrore", "Il tutor accademico inserito non è presente nel database!");
 			}
 		}
 		else{//se l'utente non è loggato come ufficio
 			System.out.println("Non sei loggato come Ufficio!");
 			session.setAttribute("messaggioErrore", "Non sei loggato come Ufficio!");
-			pagina = "ErrorPage.jsp";
 		}
 	
 	RequestDispatcher dispatcher = request.getRequestDispatcher(pagina);
